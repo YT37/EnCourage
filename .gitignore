@@ -1,0 +1,56 @@
+# Miscellaneous
+*.class
+*.log
+*.pyc
+*.swp
+
+# Files
+.DS_Store
+.buildlog/
+.history
+.svn/
+.gradle/
+build/
+
+# IntelliJ
+*.ipr
+*.iws
+.idea/
+
+# VSCode
+.vscode/
+
+# Flutter/Dart/Pub
+**/doc/api/
+**/ios/Flutter/.last_build_id
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+pubspec.lock
+
+# Android
+gradle-wrapper.jar
+.gradle
+captures/
+gradlew
+gradlew.bat
+local.properties
+GeneratedPluginRegistrant.java
+key.properties
+
+
+# Web
+Source Code/assisted_interpretation/lib/generated_plugin_registrant.dart
+
+# Symbolication
+app.*.symbols
+
+# Obfuscation
+app.*.map.json
+
+# Exceptions
+!/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
+
