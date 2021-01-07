@@ -10,9 +10,10 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
-  cupertino_icons: ^1.0.1
   responsive_framework: ^0.0.14
+  video_player: ^1.0.1
+  http: ^0.12.2
+  chewie: ^0.12.1+1
 
 dev_dependencies:
   flutter_test:

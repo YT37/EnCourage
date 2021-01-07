@@ -84,7 +84,9 @@ class _TabSliderState extends State<TabSlider> {
                           },
                           child: Text(
                             widget.tabNames[index],
-                            style: TextStyle(color: widget.textColor),
+                            style: TextStyle(
+                                color: widget.textColor,
+                                fontSize: getHeight(context, 16)),
                             textAlign: TextAlign.center,
                           ),
                         ),

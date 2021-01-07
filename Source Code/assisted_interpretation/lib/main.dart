@@ -23,7 +23,8 @@ class AssisstedInterpratation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(highlightColor: Colors.blueGrey),
+      theme: ThemeData(
+          highlightColor: Colors.blueGrey, fontFamily: "sans-serif-condensed"),
       builder: (BuildContext context, Widget widget) =>
           ResponsiveWrapper.builder(
         BouncingScrollWrapper.builder(
@@ -46,9 +47,9 @@ class AssisstedInterpratation extends StatelessWidget {
       initialRoute: "/",
       routes: {
         "/": (BuildContext context) => SplashScreen(),
-        "home": (BuildContext context) => HomeScreen(),
-        "braid": (BuildContext context) => BrAidScreen(),
-        "signus": (BuildContext context) => SignUsScreen()
+        "/home": (BuildContext context) => HomeScreen(),
+        "/braid": (BuildContext context) => BrAidScreen(),
+        "/signus": (BuildContext context) => SignUsScreen(),
       },
     );
   }

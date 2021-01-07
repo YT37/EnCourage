@@ -1,8 +1,11 @@
+import 'package:assisted_interpretation/components/alert_button.dart';
+import 'package:assisted_interpretation/components/rounded_alert_dialog.dart';
 import 'package:assisted_interpretation/components/tab_slider.dart';
 import 'package:assisted_interpretation/constant.dart';
 import 'package:assisted_interpretation/screens/braid.dart';
 import 'package:assisted_interpretation/screens/signus.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -41,34 +44,56 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: kUIColor,
-        resizeToAvoidBottomInset: false,
-        body: Container(
-          padding: EdgeInsets.all(12),
-          child: Column(children: [
-            slider,
-            Expanded(
-              child: PageView(
-                  onPageChanged: (int page) {
-                    if (toPage != null) if (toPage != page) {
-                      page = null;
-                    } else {
-                      toPage = null;
-                    }
-
-                    if (page != null) {
-                      slider.currentIndex.value = page;
-                      setState(() {
-                        currentPage = page;
-                      });
-                    }
+    return WillPopScope(
+      onWillPop: () async {
+        return showDialog(
+          context: context,
+          builder: (_) => RoundedAlertDialog(
+            title: "Do you want to quit the app?",
+            buttonsList: [
+              AlertButton(
+                  onPressed: () {
+                    Navigator.pop(context);
                   },
-                  controller: _pageController,
-                  children: screens.map<Widget>((e) => e).toList()),
-            )
-          ]),
+                  title: "No"),
+              AlertButton(
+                  onPressed: () {
+                    SystemNavigator.pop();
+                  },
+                  title: "Yes")
+            ],
+          ),
+        );
+      },
+      child: SafeArea(
+        child: Scaffold(
+          backgroundColor: kUIColor,
+          resizeToAvoidBottomInset: false,
+          body: Container(
+            padding: EdgeInsets.all(12),
+            child: Column(children: [
+              slider,
+              Expanded(
+                child: PageView(
+                    onPageChanged: (int page) {
+                      if (toPage != null) if (toPage != page) {
+                        page = null;
+                      } else {
+                        toPage = null;
+                      }
+
+                      if (page != null) {
+                        slider.currentIndex.value = page;
+                        setState(() {
+                          currentPage = page;
+                        });
+                      }
+                    },
+                    controller: _pageController,
+                    children: screens.map<Widget>((e) => e).toList()),
+              )
+            ]),
+          ),
         ),
       ),
     );

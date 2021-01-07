@@ -5,6 +5,9 @@ const kUIColor = Color(0xffF5F9F9);
 const kUILightText = Color(0xffF1F9F8);
 const kUIDarkText = Color(0xff031715);
 
+double getHeight(BuildContext context, double desiredHeight) =>
+    MediaQuery.of(context).size.height * desiredHeight / 816;
+
 const LinearGradient kUIGradient = LinearGradient(
     colors: [kUIAccent, Color(0xff84d1c9)],
     begin: Alignment.bottomRight,

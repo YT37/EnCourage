@@ -1,5 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.solvrz.assisted_interpretation">
+    
+    <uses-permission android:name="android.permission.INTERNET"/>
+
    <application
         android:label="assisted_interpretation"
         android:icon="@mipmap/ic_launcher">
