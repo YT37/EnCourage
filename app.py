@@ -16,9 +16,9 @@ def running_check():
 
 @app.route("/generate_braille", methods=["POST"])
 def generate_braille():
-    sentence = request.get_json()
+    args = request.get_json()
 
-    response = [signal for signal, _ in Sentence(sentence.lower()).toSignal()]
+    response = [signal for signal, _ in Sentence(args["sentence"].lower()).toSignal()]
 
     return jsonify({"response": response})
 
