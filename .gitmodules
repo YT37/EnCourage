@@ -1,6 +1,0 @@
-[submodule "Source Code/server"]
-	path = Source Code/server
-	url = https://github.com/Solvrz/Assisted-Interpretation-Server
-[submodule "Source\\ Code/server"]
-	path = Source\\ Code/server
-	url = https://github.com/Solvrz/Assisted-Interpretation-Server
