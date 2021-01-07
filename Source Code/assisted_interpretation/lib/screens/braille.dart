@@ -13,7 +13,27 @@ class BrailleScreen extends StatefulWidget {
 class _BrailleScreenState extends State<BrailleScreen> {
   @override
   Widget build(BuildContext context) {
-    print(widget.dots);
+    Widget drawCell(List dots) {
+      return Column(
+        children: List.generate(
+          3,
+          (int x) => Row(
+            children: List.generate(
+              2,
+              (int y) {
+                return Padding(
+                  padding: EdgeInsets.all(4),
+                  child: CircleAvatar(
+                      backgroundColor:
+                          dots[2 * x + y] == 1 ? Colors.black : Colors.white,
+                      radius: 4),
+                );
+              },
+            ),
+          ),
+        ),
+      );
+    }
 
     return SafeArea(
       child: Scaffold(
@@ -27,7 +47,15 @@ class _BrailleScreenState extends State<BrailleScreen> {
           title: Text("Braille For ${widget.word.capitalize()}"),
           centerTitle: true,
         ),
-        body: Container(),
+        body: Container(
+          child: Wrap(
+            children: widget.dots
+                .map<Widget>(
+                  (cell) => drawCell(cell),
+                )
+                .toList(),
+          ),
+        ),
       ),
     );
   }

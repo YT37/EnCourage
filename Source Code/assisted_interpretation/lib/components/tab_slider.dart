@@ -64,34 +64,36 @@ class _TabSliderState extends State<TabSlider> {
               Padding(
                 padding: EdgeInsets.fromLTRB(0, 6, 0, 8),
                 child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: List.generate(
-                      widget.tabNames.length,
-                      (index) => Expanded(
-                        child: GestureDetector(
-                          onTap: () {
-                            if (mounted) {
-                              setState(() {
-                                widget.currentIndex.value = index;
-                                widget.onChanged == null
-                                    ? widget.parent.setState(() {
-                                        widget.parent.screen =
-                                            widget.screens[index]();
-                                      })
-                                    : widget.onChanged(index);
-                              });
-                            }
-                          },
-                          child: Text(
-                            widget.tabNames[index],
-                            style: TextStyle(
-                                color: widget.textColor,
-                                fontSize: getHeight(context, 16)),
-                            textAlign: TextAlign.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: List.generate(
+                    widget.tabNames.length,
+                    (index) => Expanded(
+                      child: GestureDetector(
+                        onTap: () {
+                          if (mounted) {
+                            setState(() {
+                              widget.currentIndex.value = index;
+                              widget.onChanged == null
+                                  ? widget.parent.setState(() {
+                                      widget.parent.screen =
+                                          widget.screens[index]();
+                                    })
+                                  : widget.onChanged(index);
+                            });
+                          }
+                        },
+                        child: Text(
+                          widget.tabNames[index],
+                          style: TextStyle(
+                            color: widget.textColor,
+                            fontSize: getHeight(context, 16),
                           ),
+                          textAlign: TextAlign.center,
                         ),
                       ),
-                    )),
+                    ),
+                  ),
+                ),
               ),
               AnimatedPositioned(
                 duration: widget.animDuration,
@@ -99,12 +101,13 @@ class _TabSliderState extends State<TabSlider> {
                 left: widget.currentIndex.value *
                     (sliderWidth / widget.tabNames.length),
                 child: Container(
-                    width: sliderWidth / widget.tabNames.length,
-                    height: widget.height,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: kUIColor.withOpacity(0.3),
-                    )),
+                  width: sliderWidth / widget.tabNames.length,
+                  height: widget.height,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: kUIColor.withOpacity(0.3),
+                  ),
+                ),
               ),
             ]),
           ),

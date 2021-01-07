@@ -75,22 +75,23 @@ class _HomeScreenState extends State<HomeScreen> {
               slider,
               Expanded(
                 child: PageView(
-                    onPageChanged: (int page) {
-                      if (toPage != null) if (toPage != page) {
-                        page = null;
-                      } else {
-                        toPage = null;
-                      }
+                  onPageChanged: (int page) {
+                    if (toPage != null) if (toPage != page) {
+                      page = null;
+                    } else {
+                      toPage = null;
+                    }
 
-                      if (page != null) {
-                        slider.currentIndex.value = page;
-                        setState(() {
-                          currentPage = page;
-                        });
-                      }
-                    },
-                    controller: _pageController,
-                    children: screens.map<Widget>((e) => e).toList()),
+                    if (page != null) {
+                      slider.currentIndex.value = page;
+                      setState(() {
+                        currentPage = page;
+                      });
+                    }
+                  },
+                  controller: _pageController,
+                  children: screens.map<Widget>((e) => e).toList(),
+                ),
               )
             ]),
           ),
