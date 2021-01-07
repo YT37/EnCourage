@@ -16,6 +16,10 @@ def running_check():
 
 @app.route("/generate_braille/<string:word>")
 def generate_braille(word):
+    print(word)
+    for signal, _ in Sentence(word.lower()).toSignal():
+        print(signal)
+
     response = [signal for signal, _ in Sentence(word.lower()).toSignal()]
 
     return response
