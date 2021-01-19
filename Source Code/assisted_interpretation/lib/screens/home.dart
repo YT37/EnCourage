@@ -16,9 +16,9 @@ class _HomeScreenState extends State<HomeScreen> {
   var slider;
 
   final List screens = [BrAidScreen(), SignUsScreen()];
-  final PageController _pageController = PageController(initialPage: 1);
+  final PageController _pageController = PageController(initialPage: 0);
 
-  int currentPage = 1;
+  int currentPage = 0;
   int toPage;
 
   @override
@@ -52,15 +52,17 @@ class _HomeScreenState extends State<HomeScreen> {
             title: "Do you want to quit the app?",
             buttonsList: [
               AlertButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  title: "No"),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                title: "No",
+              ),
               AlertButton(
-                  onPressed: () {
-                    SystemNavigator.pop();
-                  },
-                  title: "Yes")
+                onPressed: () {
+                  SystemNavigator.pop();
+                },
+                title: "Yes",
+              )
             ],
           ),
         );
@@ -71,28 +73,30 @@ class _HomeScreenState extends State<HomeScreen> {
           resizeToAvoidBottomInset: false,
           body: Container(
             padding: EdgeInsets.all(12),
-            child: Column(children: [
-              slider,
-              Expanded(
-                child: PageView(
-                    onPageChanged: (int page) {
-                      if (toPage != null) if (toPage != page) {
-                        page = null;
-                      } else {
-                        toPage = null;
-                      }
+            child: Column(
+              children: [
+                slider,
+                Expanded(
+                  child: PageView(
+                      onPageChanged: (int page) {
+                        if (toPage != null) if (toPage != page) {
+                          page = null;
+                        } else {
+                          toPage = null;
+                        }
 
-                      if (page != null) {
-                        slider.currentIndex.value = page;
-                        setState(() {
-                          currentPage = page;
-                        });
-                      }
-                    },
-                    controller: _pageController,
-                    children: screens.map<Widget>((e) => e).toList()),
-              )
-            ]),
+                        if (page != null) {
+                          slider.currentIndex.value = page;
+                          setState(() {
+                            currentPage = page;
+                          });
+                        }
+                      },
+                      controller: _pageController,
+                      children: screens.map<Widget>((e) => e).toList()),
+                )
+              ],
+            ),
           ),
         ),
       ),

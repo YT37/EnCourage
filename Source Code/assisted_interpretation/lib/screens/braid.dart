@@ -1,11 +1,9 @@
-import 'dart:convert';
-
+import 'package:assisted_interpretation/api/braid.dart';
 import 'package:assisted_interpretation/components/alert_button.dart';
 import 'package:assisted_interpretation/components/rounded_alert_dialog.dart';
 import 'package:assisted_interpretation/constant.dart';
 import 'package:assisted_interpretation/screens/braille.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 
 class BrAidScreen extends StatelessWidget {
   @override
@@ -59,29 +57,24 @@ class BrAidScreen extends StatelessWidget {
 
                             String sentence = controller.text;
 
-                            http.Response token = await http.post(
-                              "https://assisted-interpretation.herokuapp.com/generate_braille",
-                              headers: <String, String>{
-                                "Content-Type":
-                                    "application/json; charset=UTF-8",
-                              },
-                              body: jsonEncode(
-                                  <String, dynamic>{"sentence": sentence.toLowerCase().trim()}),
-                            );
+                            Response response =
+                                await BrAidApi.getCells(sentence);
 
-                            if (token.statusCode == 200) {
-                              Map dots = jsonDecode(token.body);
-
+                            if (response.status == Status.Ok) {
                               Navigator.pop(context);
                               controller.clear();
+
+                              print(response.response);
 
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                   builder: (BuildContext context) =>
                                       BrailleScreen(
-                                          dots: dots["response"],
-                                          word: sentence),
+                                    data:
+                                        BrailleData.fromMap(response.response),
+                                    word: sentence,
+                                  ),
                                 ),
                               );
                             } else {
@@ -95,7 +88,7 @@ class BrAidScreen extends StatelessWidget {
                                   elevation: 10,
                                   backgroundColor: kUIAccent,
                                   content: Text(
-                                    "Sorry, Could'nt COnvert the Text",
+                                    "Sorry, Could'nt Convert the Text",
                                     textAlign: TextAlign.center,
                                   ),
                                 ),
