@@ -10,14 +10,15 @@ class RoundedAlertDialog extends StatelessWidget {
   final double titleSize;
   final double descriptionSize;
 
-  RoundedAlertDialog({@required this.title,
-    this.description = "",
-    this.buttonsList = const [],
-    this.otherWidgets,
-    this.isExpanded = true,
-    this.centerTitle = true,
-    this.titleSize = 24,
-    this.descriptionSize = 14});
+  RoundedAlertDialog(
+      {@required this.title,
+      this.description = "",
+      this.buttonsList = const [],
+      this.otherWidgets,
+      this.isExpanded = true,
+      this.centerTitle = true,
+      this.titleSize = 24,
+      this.descriptionSize = 14});
 
   @override
   Widget build(BuildContext context) {
@@ -28,11 +29,11 @@ class RoundedAlertDialog extends StatelessWidget {
       ),
       title: title != ""
           ? Text(
-        title,
-        textAlign: centerTitle ? TextAlign.center : TextAlign.left,
-        style:
-        TextStyle(fontSize: titleSize, fontWeight: FontWeight.bold),
-      )
+              title,
+              textAlign: centerTitle ? TextAlign.center : TextAlign.left,
+              style:
+                  TextStyle(fontSize: titleSize, fontWeight: FontWeight.bold),
+            )
           : null,
       content: Column(mainAxisSize: MainAxisSize.min, children: [
         if (description != "")
@@ -53,20 +54,16 @@ class RoundedAlertDialog extends StatelessWidget {
                 : MainAxisAlignment.end,
             children: List.generate(
               buttonsList.length,
-                  (index) =>
-              isExpanded
+              (index) => isExpanded
                   ? Expanded(
-                child: Padding(
-                  padding: EdgeInsets.only(left: 4, right: 4),
-                  child: buttonsList[index],
-                ),
-              )
+                      child: Padding(
+                        padding: EdgeInsets.only(left: 4, right: 4),
+                        child: buttonsList[index],
+                      ),
+                    )
                   : Container(
-                  width: MediaQuery
-                      .of(context)
-                      .size
-                      .width / 4,
-                  child: buttonsList[index]),
+                      width: MediaQuery.of(context).size.width / 4,
+                      child: buttonsList[index]),
             ),
           )
       ]),
