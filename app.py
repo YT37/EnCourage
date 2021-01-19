@@ -24,7 +24,7 @@ def braille_cells():
 
 
 @app.route("/braille/cells-repr", methods=["POST"])
-def braille_cells():
+def braille_cells_repr():
     args = request.get_json()
 
     signal = Sentence(args["sentence"].lower()).toSignal()
