@@ -10,17 +10,29 @@ CORS(app)
 
 
 @app.route("/")
-def running_check():
-    return "The Server is running"
+def check():
+    return "The Server is running.\nThe available routes are:\n1. /braille/cells\n2. /braille/cells-repr"
 
 
-@app.route("/generate_braille", methods=["POST"])
-def generate_braille():
+@app.route("/braille/cells", methods=["POST"])
+def braille_cells():
     args = request.get_json()
 
-    response = [signal for signal, _ in Sentence(args["sentence"].lower()).toSignal()]
+    cells = [signal for signal, _ in Sentence(args["sentence"].lower()).toSignal()]
 
-    return jsonify({"response": response})
+    return jsonify({"cells": cells})
+
+
+@app.route("/braille/cells-repr", methods=["POST"])
+def braille_cells():
+    args = request.get_json()
+
+    signal = Sentence(args["sentence"].lower()).toSignal()
+
+    cells = [cell for cell, _ in signal]
+    repr_ = [repr_ for repr_ in signal]
+
+    return jsonify({"cells": cells, "repr": repr_})
 
 
 if __name__ == "__main__":
