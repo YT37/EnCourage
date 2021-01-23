@@ -83,9 +83,12 @@ class SignScreen extends StatefulWidget {
 }
 
 class _SignScreenState extends State<SignScreen> {
+  // ignore: unused_field
   TargetPlatform _platform;
+
   VideoPlayerController _videoPlayerController1;
   VideoPlayerController _videoPlayerController2;
+
   ChewieController _chewieController;
 
   @override

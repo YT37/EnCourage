@@ -1,6 +1,6 @@
 import 'package:assisted_interpretation/config/constant.dart';
-import 'package:assisted_interpretation/screens/braid/braid.dart';
-import 'package:assisted_interpretation/screens/signus/signus.dart';
+import 'package:assisted_interpretation/ui/braid/braid.dart';
+import 'package:assisted_interpretation/ui/signus/signus.dart';
 import 'package:assisted_interpretation/widgets/alert_button.dart';
 import 'package:assisted_interpretation/widgets/rounded_alert_dialog.dart';
 import 'package:assisted_interpretation/widgets/tab_slider.dart';

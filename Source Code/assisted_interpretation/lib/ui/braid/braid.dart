@@ -123,8 +123,8 @@ class _BrAidScreenState extends State<BrAidScreen> {
                           ),
                         );
                       } else {
-                        ScaffoldMessenger.of(context).removeCurrentSnackBar();
-                        ScaffoldMessenger.of(context).showSnackBar(
+                        Scaffold.of(context).removeCurrentSnackBar();
+                        Scaffold.of(context).showSnackBar(
                           SnackBar(
                             elevation: 10,
                             backgroundColor: kUIAccent,
