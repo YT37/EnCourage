@@ -17,8 +17,11 @@ def check():
 @app.route("/braille/cells", methods=["POST"])
 def braille_cells():
     args = request.get_json()
+    print(args["sentence"])
 
-    cells = [signal for signal, _ in Sentence(args["sentence"].lower()).toSignal()]
+    cells = [signal for signal, _ in Sentence(args["sentence"]).toSignal()]
+    print(cells)
+
 
     return jsonify({"cells": cells})
 
