@@ -34,7 +34,7 @@ def braille_cells_repr():
     args = request.get_json()
     print(args["sentence"])
 
-    signal = Sentence(args["sentence"]).toSignal()
+    signal = list(Sentence(args["sentence"]).toSignal())
     print(signal)
 
     cells = [cell for cell, _ in signal]
