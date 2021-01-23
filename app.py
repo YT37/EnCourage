@@ -16,24 +16,31 @@ def check():
 
 @app.route("/braille/cells", methods=["POST"])
 def braille_cells():
+    print("Func Called")
+
     args = request.get_json()
     print(args["sentence"])
 
     cells = [signal for signal, _ in Sentence(args["sentence"]).toSignal()]
     print(cells)
 
-
     return jsonify({"cells": cells})
 
 
 @app.route("/braille/cells-repr", methods=["POST"])
 def braille_cells_repr():
-    args = request.get_json()
+    print("Func Called")
 
-    signal = Sentence(args["sentence"].lower()).toSignal()
+    args = request.get_json()
+    print(args["sentence"])
+
+    signal = Sentence(args["sentence"]).toSignal()
+    print(signal)
 
     cells = [cell for cell, _ in signal]
     repr_ = [repr_ for repr_ in signal]
+    print(cells)
+    print(repr_)
 
     return jsonify({"cells": cells, "repr": repr_})
 
