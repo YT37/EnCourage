@@ -107,7 +107,8 @@ class _BrAidScreenState extends State<BrAidScreen> {
 
                       String sentence = controller.text;
 
-                      Response response = await BrAidApi.getCells(sentence);
+                      Response response =
+                          await BrAidApi.getCellsWithRepr(sentence);
 
                       Navigator.pop(context);
                       controller.clear();

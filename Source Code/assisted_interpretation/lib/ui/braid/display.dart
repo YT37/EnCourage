@@ -1,5 +1,4 @@
 import 'package:assisted_interpretation/config/constant.dart';
-import 'package:assisted_interpretation/config/extensions.dart';
 import 'package:flutter/material.dart';
 
 class BrailleData {
@@ -27,34 +26,32 @@ class BrailleScreen extends StatefulWidget {
 
 class _BrailleScreenState extends State<BrailleScreen> {
   Widget drawCell({List cell, String repr = ""}) {
-    return Padding(
-      padding: const EdgeInsets.all(12.0),
-      child: Column(
-        children: [
-          ...List.generate(
-            3,
-            (int x) => Row(
-              children: List.generate(
-                2,
-                (int y) => Container(
-                  margin: const EdgeInsets.all(4),
-                  height: 12,
-                  width: 12,
-                  decoration: BoxDecoration(
-                    color: cell[2 * x + y] == 1 ? Colors.black : Colors.white,
-                    border: Border.all(color: Colors.black),
-                    shape: BoxShape.circle,
-                  ),
+    return Column(
+      children: [
+        ...List.generate(
+          3,
+          (int x) => Row(
+            mainAxisSize: MainAxisSize.min,
+            children: List.generate(
+              2,
+              (int y) => Container(
+                margin: const EdgeInsets.all(4),
+                height: 12,
+                width: 12,
+                decoration: BoxDecoration(
+                  color: cell[2 * x + y] == 1 ? Colors.black : Colors.white,
+                  border: Border.all(color: Colors.black),
+                  shape: BoxShape.circle,
                 ),
               ),
             ),
           ),
-          Text(
-            repr,
-            style: TextStyle(fontSize: 18),
-          ),
-        ],
-      ),
+        ),
+        Text(
+          repr,
+          style: TextStyle(fontSize: 18),
+        ),
+      ],
     );
   }
 
@@ -69,35 +66,44 @@ class _BrailleScreenState extends State<BrailleScreen> {
             child: Icon(Icons.arrow_back_ios),
             onTap: () => Navigator.popAndPushNamed(context, "/home"),
           ),
-          title: Text("BrAid Text Translation"),
+          title: Text("BrAid Translation"),
           centerTitle: true,
         ),
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Center(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 12),
+        body: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 12),
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(bottom: 24),
                 child: Text(
-                    "Braille Translation for \"${widget.text.capitalize()}\"",
-                    style: TextStyle(fontSize: 24)),
+                  "Braille Translation for\n\"${widget.text}\"",
+                  style: TextStyle(fontSize: 24),
+                  textAlign: TextAlign.center,
+                ),
               ),
-            ),
-            Expanded(
-              child: Wrap(
-                direction: Axis.vertical,
-                children: List.generate(
-                  widget.data.cells.length,
-                  (int index) => drawCell(
-                    cell: widget.data.cells[index],
-                    repr: widget.data.repr.length > index
-                        ? widget.data.repr[index]
-                        : "",
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Center(
+                    child: Wrap(
+                      spacing: 24.0,
+                      runSpacing: 24.0,
+                      children: List.generate(
+                        widget.data.cells.length,
+                        (int index) {
+                          return drawCell(
+                            cell: widget.data.cells[index],
+                            repr: widget.data.repr.length > index
+                                ? widget.data.repr[index][1]
+                                : "",
+                          );
+                        },
+                      ),
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

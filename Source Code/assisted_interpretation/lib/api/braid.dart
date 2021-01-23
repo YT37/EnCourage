@@ -35,7 +35,7 @@ class BrAidApi {
         "Content-Type": "application/json; charset=UTF-8",
       },
       body: jsonEncode(
-        <String, dynamic>{"sentence": sentence.toLowerCase().trim()},
+        <String, dynamic>{"sentence": sentence.trim()},
       ),
     );
 
@@ -62,7 +62,7 @@ class BrAidApi {
         "Content-Type": "application/json; charset=UTF-8",
       },
       body: jsonEncode(
-        <String, dynamic>{"sentence": sentence.toLowerCase().trim()},
+        <String, dynamic>{"sentence": sentence.trim()},
       ),
     );
 
