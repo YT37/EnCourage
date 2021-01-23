@@ -1,4 +1,5 @@
-import 'package:assisted_interpretation/constant.dart';
+import 'package:assisted_interpretation/config/constant.dart';
+import 'package:assisted_interpretation/config/extensions.dart';
 import 'package:flutter/material.dart';
 
 class BrailleData {
@@ -8,7 +9,6 @@ class BrailleData {
   BrailleData({this.cells, this.repr = const []});
 
   static BrailleData fromMap(Map map) {
-    // print(map);
     return BrailleData(
       cells: map["cells"],
       repr: map["repr"] != null ? map["repr"] : [],
@@ -18,9 +18,9 @@ class BrailleData {
 
 class BrailleScreen extends StatefulWidget {
   final BrailleData data;
-  final String word;
+  final String text;
 
-  BrailleScreen({@required this.data, @required this.word});
+  BrailleScreen({@required this.data, @required this.text});
   @override
   _BrailleScreenState createState() => _BrailleScreenState();
 }
@@ -79,7 +79,7 @@ class _BrailleScreenState extends State<BrailleScreen> {
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 12),
                 child: Text(
-                    "Braille Translation for \"${widget.word.capitalize()}\"",
+                    "Braille Translation for \"${widget.text.capitalize()}\"",
                     style: TextStyle(fontSize: 24)),
               ),
             ),

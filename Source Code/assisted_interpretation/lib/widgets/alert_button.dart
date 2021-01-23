@@ -1,4 +1,4 @@
-import 'package:assisted_interpretation/constant.dart';
+import 'package:assisted_interpretation/config/constant.dart';
 import 'package:flutter/material.dart';
 
 class AlertButton extends StatelessWidget {

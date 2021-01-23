@@ -30,8 +30,7 @@ class BrAidApi {
     print("Fetching Results...");
 
     http.Response token = await http.post(
-      "https://assisted-interpretation.herokuapp.com/generate_braille",
-      // "https://assisted-interpretation.herokuapp.com/braid/cells",
+      "https://assisted-interpretation.herokuapp.com/braid/cells",
       headers: <String, String>{
         "Content-Type": "application/json; charset=UTF-8",
       },
@@ -47,9 +46,7 @@ class BrAidApi {
     }, status: Status.Ok);
 
     if (token.statusCode == 200)
-      response.response = {
-        "cells": jsonDecode(token.body)["response"]
-      }; //TODO: Change response key to cells in server
+      response.response = {"cells": jsonDecode(token.body)["cells"]};
     else
       response.status = Status.Error;
 
@@ -57,6 +54,8 @@ class BrAidApi {
   }
 
   static Future<Response> getCellsWithRepr(String sentence) async {
+    print("Fetching Results...");
+
     http.Response token = await http.post(
       "https://assisted-interpretation.herokuapp.com/braid/cells-repr",
       headers: <String, String>{
@@ -66,6 +65,8 @@ class BrAidApi {
         <String, dynamic>{"sentence": sentence.toLowerCase().trim()},
       ),
     );
+
+    print("Fetched Results! Status Code: ${token.statusCode}");
 
     Response response = Response(
       response: {
