@@ -1,7 +1,7 @@
 import 'dart:ui' as ui;
 
-import 'package:assisted_interpretation/constant.dart';
-import 'package:assisted_interpretation/screens/export.dart';
+import 'package:assisted_interpretation/config/constant.dart';
+import 'package:assisted_interpretation/ui/export.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
