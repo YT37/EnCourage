@@ -21,8 +21,9 @@ class _SignUsScreenState extends State<SignUsScreen> {
 
   String transcription = "";
 
-  void start() =>
-      _speech.listen(locale: "en_US").then((result) => print(result));
+  void start() => _speech.listen(locale: "en_US").then(
+        (result) => print(result),
+      );
 
   void cancel() => _speech.cancel().then(
         (result) => setState(() => _isListening = result),
@@ -171,7 +172,9 @@ class _SignUsScreenState extends State<SignUsScreen> {
                               color: Colors.grey.shade200,
                               child: Text(transcription),
                             ),
-                            SizedBox(height: getHeight(context, 10)),
+                            SizedBox(
+                              height: getHeight(context, 10),
+                            ),
                             AlertButton(
                               onPressed:
                                   _speechRecognitionAvailable && !_isListening

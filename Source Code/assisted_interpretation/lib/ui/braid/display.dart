@@ -1,5 +1,4 @@
 import 'package:assisted_interpretation/config/constant.dart';
-import 'package:assisted_interpretation/config/extensions.dart';
 import 'package:flutter/material.dart';
 
 class BrailleData {
@@ -21,6 +20,7 @@ class BrailleScreen extends StatefulWidget {
   final String text;
 
   BrailleScreen({@required this.data, @required this.text});
+
   @override
   _BrailleScreenState createState() => _BrailleScreenState();
 }
@@ -28,7 +28,7 @@ class BrailleScreen extends StatefulWidget {
 class _BrailleScreenState extends State<BrailleScreen> {
   Widget drawCell({List cell, String repr = ""}) {
     return Padding(
-      padding: const EdgeInsets.all(12.0),
+      padding: EdgeInsets.all(12),
       child: Column(
         children: [
           ...List.generate(
@@ -37,9 +37,9 @@ class _BrailleScreenState extends State<BrailleScreen> {
               children: List.generate(
                 2,
                 (int y) => Container(
-                  margin: const EdgeInsets.all(4),
-                  height: 12,
-                  width: 12,
+                  margin: EdgeInsets.all(4),
+                  height: 18,
+                  width: 18,
                   decoration: BoxDecoration(
                     color: cell[2 * x + y] == 1 ? Colors.black : Colors.white,
                     border: Border.all(color: Colors.black),
@@ -51,7 +51,7 @@ class _BrailleScreenState extends State<BrailleScreen> {
           ),
           Text(
             repr,
-            style: TextStyle(fontSize: 18),
+            style: TextStyle(fontSize: 20),
           ),
         ],
       ),
@@ -77,10 +77,11 @@ class _BrailleScreenState extends State<BrailleScreen> {
           children: [
             Center(
               child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 12),
+                padding: EdgeInsets.symmetric(vertical: 12),
                 child: Text(
-                    "Braille Translation for \"${widget.text.capitalize()}\"",
-                    style: TextStyle(fontSize: 24)),
+                  "Braille Translation for \"${widget.text}\"",
+                  style: TextStyle(fontSize: 24),
+                ),
               ),
             ),
             Expanded(
@@ -91,7 +92,7 @@ class _BrailleScreenState extends State<BrailleScreen> {
                   (int index) => drawCell(
                     cell: widget.data.cells[index],
                     repr: widget.data.repr.length > index
-                        ? widget.data.repr[index]
+                        ? widget.data.repr[index][1]
                         : "",
                   ),
                 ),

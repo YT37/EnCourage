@@ -21,8 +21,9 @@ class _BrAidScreenState extends State<BrAidScreen> {
 
   String transcription = "";
 
-  void start() =>
-      _speech.listen(locale: "en_US").then((result) => print(result));
+  void start() => _speech.listen(locale: "en_US").then(
+        (result) => print(result),
+      );
 
   void cancel() => _speech.cancel().then(
         (result) => setState(() => _isListening = result),
@@ -107,7 +108,8 @@ class _BrAidScreenState extends State<BrAidScreen> {
 
                       String sentence = controller.text;
 
-                      Response response = await BrAidApi.getCells(sentence);
+                      Response response =
+                          await BrAidApi.getCellsWithRepr(sentence);
 
                       Navigator.pop(context);
                       controller.clear();
@@ -174,7 +176,9 @@ class _BrAidScreenState extends State<BrAidScreen> {
                                 ? "Recognized text will appear here"
                                 : transcription),
                           ),
-                          SizedBox(height: getHeight(context, 10)),
+                          SizedBox(
+                            height: getHeight(context, 10),
+                          ),
                           AlertButton(
                             onPressed:
                                 _speechRecognitionAvailable && !_isListening

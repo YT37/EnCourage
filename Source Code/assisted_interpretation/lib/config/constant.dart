@@ -23,10 +23,11 @@ const InputDecoration kInputDecoration = InputDecoration(
     borderSide: BorderSide(color: Colors.grey),
   ),
   focusedBorder: OutlineInputBorder(
-      borderSide: BorderSide(color: Color(0xFF63C1A8), width: 2),
-      borderRadius: BorderRadius.all(
-        Radius.circular(32),
-      )),
+    borderSide: BorderSide(color: Color(0xFF63C1A8), width: 2),
+    borderRadius: BorderRadius.all(
+      Radius.circular(32),
+    ),
+  ),
 );
 
 const InputDecoration kInputDialogDecoration = InputDecoration(

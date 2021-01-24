@@ -150,7 +150,7 @@ class _SignScreenState extends State<SignScreen> {
                     )
                   : Column(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
+                      children: [
                         CircularProgressIndicator(),
                         SizedBox(height: 20),
                         Text('Loading'),
@@ -162,7 +162,7 @@ class _SignScreenState extends State<SignScreen> {
             onPressed: () {
               _chewieController.enterFullScreen();
             },
-            child: const Text('Fullscreen'),
+            child: Text('Fullscreen'),
           ),
           Row(
             children: <Widget>[
@@ -173,7 +173,7 @@ class _SignScreenState extends State<SignScreen> {
                       _chewieController.dispose();
                       _videoPlayerController1.pause();
                       _videoPlayerController1.seekTo(
-                        const Duration(),
+                        Duration(),
                       );
                       _chewieController = ChewieController(
                         videoPlayerController: _videoPlayerController1,
@@ -182,7 +182,7 @@ class _SignScreenState extends State<SignScreen> {
                       );
                     });
                   },
-                  child: const Padding(
+                  child: Padding(
                     padding: EdgeInsets.symmetric(vertical: 16),
                     child: Text("Landscape Video"),
                   ),
@@ -195,7 +195,7 @@ class _SignScreenState extends State<SignScreen> {
                       _chewieController.dispose();
                       _videoPlayerController2.pause();
                       _videoPlayerController2.seekTo(
-                        const Duration(),
+                        Duration(),
                       );
                       _chewieController = ChewieController(
                         videoPlayerController: _videoPlayerController2,
@@ -204,7 +204,7 @@ class _SignScreenState extends State<SignScreen> {
                       );
                     });
                   },
-                  child: const Padding(
+                  child: Padding(
                     padding: EdgeInsets.symmetric(vertical: 16),
                     child: Text("Portrait Video"),
                   ),
@@ -221,7 +221,7 @@ class _SignScreenState extends State<SignScreen> {
                       _platform = TargetPlatform.android;
                     });
                   },
-                  child: const Padding(
+                  child: Padding(
                     padding: EdgeInsets.symmetric(vertical: 16),
                     child: Text("Android controls"),
                   ),
@@ -234,7 +234,7 @@ class _SignScreenState extends State<SignScreen> {
                       _platform = TargetPlatform.iOS;
                     });
                   },
-                  child: const Padding(
+                  child: Padding(
                     padding: EdgeInsets.symmetric(vertical: 16),
                     child: Text("iOS controls"),
                   ),

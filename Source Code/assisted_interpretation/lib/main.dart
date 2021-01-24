@@ -15,7 +15,9 @@ void main() {
   RenderErrorBox.textStyle = ui.TextStyle(color: Colors.transparent);
 
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then(
-    (_) => runApp(AssisstedInterpratation()),
+    (_) => runApp(
+      AssisstedInterpratation(),
+    ),
   );
 }
 
