@@ -1,6 +1,7 @@
 import 'package:assisted_interpretation/api/signus.dart';
 import 'package:assisted_interpretation/config/constant.dart';
 import 'package:assisted_interpretation/config/extensions.dart';
+import 'package:assisted_interpretation/ui/signus/components/speech_dialog.dart';
 import 'package:assisted_interpretation/widgets/alert_button.dart';
 import 'package:assisted_interpretation/widgets/rounded_alert_dialog.dart';
 import 'package:flutter/material.dart';
@@ -17,9 +18,6 @@ class _SignUsScreenState extends State<SignUsScreen> {
   stt.SpeechToText speech;
 
   bool available = false;
-  bool listening = false;
-
-  String transcription = "";
 
   @override
   initState() {
@@ -97,7 +95,7 @@ class _SignUsScreenState extends State<SignUsScreen> {
                             MaterialPageRoute(
                               builder: (BuildContext context) => SignScreen(
                                 url: response.url,
-                                word: sentence.capitalize(),
+                                word: sentence.trim().capitalize(),
                               ),
                             ),
                           );
@@ -108,7 +106,7 @@ class _SignUsScreenState extends State<SignUsScreen> {
                               elevation: 10,
                               backgroundColor: kUIAccent,
                               content: Text(
-                                "Sorry, Could'nt COnvert the Text",
+                                "Sorry, Could'nt Convert the Text",
                                 textAlign: TextAlign.center,
                               ),
                             ),
@@ -132,112 +130,11 @@ class _SignUsScreenState extends State<SignUsScreen> {
             ),
             onPressed: () {
               showDialog(
-                context: context,
-                builder: (_) => RoundedAlertDialog(
-                  titleSize: 22,
-                  title: "Press to Speak",
-                  centerTitle: true,
-                  isExpanded: false,
-                  otherWidgets: [
-                    Padding(
-                      padding: EdgeInsets.all(8),
-                      child: Center(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            Container(
-                              padding: EdgeInsets.all(8),
-                              color: Colors.grey.shade200,
-                              child: Text(transcription),
-                            ),
-                            SizedBox(
-                              height: getHeight(context, 10),
-                            ),
-                            AlertButton(
-                              onPressed: available && !listening
-                                  ? () {
-                                      speech.listen(
-                                          onResult: (result) => print(result));
-                                      setState(() => listening = true);
-                                    }
-                                  : null,
-                              title: listening ? "Listening..." : "Listen",
-                            ),
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: AlertButton(
-                                    onPressed: listening
-                                        ? () {
-                                            if (listening) {
-                                              speech.stop();
-                                              speech.cancel();
-                                            } else {
-                                              Navigator.pop(context);
-                                            }
-                                          }
-                                        : null,
-                                    title: "Cancel",
-                                  ),
-                                ),
-                                SizedBox(width: 10),
-                                Expanded(
-                                  child: AlertButton(
-                                    onPressed: listening && transcription != ""
-                                        ? () async {
-                                            speech.stop();
-
-                                            FocusScope.of(context).unfocus();
-
-                                            String sentence = transcription;
-
-                                            Response response =
-                                                await SignUsApi.getSigns(
-                                                    sentence);
-                                            Navigator.pop(context);
-
-                                            if (response.status == Status.Ok) {
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder:
-                                                      (BuildContext context) =>
-                                                          SignScreen(
-                                                    url: response.url,
-                                                    word: sentence,
-                                                  ),
-                                                ),
-                                              );
-                                            } else {
-                                              ScaffoldMessenger.of(context)
-                                                  .removeCurrentSnackBar();
-                                              ScaffoldMessenger.of(context)
-                                                  .showSnackBar(
-                                                SnackBar(
-                                                  elevation: 10,
-                                                  backgroundColor: kUIAccent,
-                                                  content: Text(
-                                                    "Sorry, Could'nt Convert the Text",
-                                                    textAlign: TextAlign.center,
-                                                  ),
-                                                ),
-                                              );
-                                            }
-                                          }
-                                        : null,
-                                    title: "Done",
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              );
+                  context: context,
+                  builder: (_) => SpeechDialog(
+                        speech: speech,
+                        available: available,
+                      ));
             },
             child: Text(
               "Speech",
