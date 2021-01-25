@@ -1,0 +1,1 @@
+cd Source\ Code/assisted_interpretation/ && flutter build apk && mv build/app/outputs/flutter-apk/app-release.apk ../.. && cd ../.. && mv app-release.apk "Assisted-Interpretation.apk"
