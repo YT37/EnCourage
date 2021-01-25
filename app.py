@@ -30,7 +30,7 @@ def braille_cells_repr():
     signal = list(Sentence(args["sentence"]).toSignal())
 
     cells = [cell for cell, _ in signal]
-    repr_ = [repr_ for repr_ in signal]
+    repr_ = [repr_ for _, repr_ in signal]
 
     return jsonify({"cells": cells, "repr": repr_})
 
