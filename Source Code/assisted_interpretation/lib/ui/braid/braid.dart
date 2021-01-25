@@ -4,7 +4,7 @@ import 'package:assisted_interpretation/widgets/alert_button.dart';
 import 'package:assisted_interpretation/widgets/rounded_alert_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:speech_recognition/speech_recognition.dart';
+import 'package:speech_to_text/speech_to_text.dart' as stt;
 
 import './display.dart';
 
@@ -14,49 +14,30 @@ class BrAidScreen extends StatefulWidget {
 }
 
 class _BrAidScreenState extends State<BrAidScreen> {
-  SpeechRecognition _speech;
+  stt.SpeechToText speech;
 
-  bool _speechRecognitionAvailable = false;
-  bool _isListening = false;
+  bool available = false;
+  bool listening = false;
 
   String transcription = "";
-
-  void start() =>
-      _speech.listen(locale: "en_US").then((result) => print(result));
-
-  void cancel() => _speech.cancel().then(
-        (result) => setState(() => _isListening = result),
-      );
-
-  void stop() => _speech.stop().then(
-        (result) => setState(() => _isListening = result),
-      );
-
-  void onSpeechAvailability(bool result) =>
-      setState(() => _speechRecognitionAvailable = result);
-
-  void onRecognitionStarted() => setState(() => _isListening = true);
-
-  void onRecognitionResult(String text) => setState(() => transcription = text);
-
-  void onRecognitionComplete() => setState(() => _isListening = false);
 
   @override
   initState() {
     super.initState();
 
-    _speech = SpeechRecognition();
-    _speech.setAvailabilityHandler(onSpeechAvailability);
-    _speech.setRecognitionStartedHandler(onRecognitionStarted);
-    _speech.setRecognitionResultHandler(onRecognitionResult);
-    _speech.setRecognitionCompleteHandler(onRecognitionComplete);
-    _speech.activate().then(
-          (res) => setState(() => _speechRecognitionAvailable = res),
-        );
+    speech = stt.SpeechToText();
+
+    speech
+        .initialize(
+          onStatus: (status) => print("Status: $status"),
+          onError: (error) => print("Error: $error"),
+        )
+        .then((value) => available = value);
   }
 
   @override
   Widget build(BuildContext context) {
+    print(available);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.start,
@@ -71,7 +52,7 @@ class _BrAidScreenState extends State<BrAidScreen> {
         SizedBox(
           height: getHeight(context, 24),
         ),
-        FlatButton(
+        MaterialButton(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(18),
             side: BorderSide(color: kUIAccent),
@@ -124,8 +105,8 @@ class _BrAidScreenState extends State<BrAidScreen> {
                           ),
                         );
                       } else {
-                        Scaffold.of(context).removeCurrentSnackBar();
-                        Scaffold.of(context).showSnackBar(
+                        ScaffoldMessenger.of(context).removeCurrentSnackBar();
+                        ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             elevation: 10,
                             backgroundColor: kUIAccent,
@@ -147,7 +128,7 @@ class _BrAidScreenState extends State<BrAidScreen> {
             style: TextStyle(fontSize: 24, color: Colors.grey[700]),
           ),
         ),
-        FlatButton(
+        MaterialButton(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(18),
             side: BorderSide(color: kUIAccent),
@@ -171,38 +152,48 @@ class _BrAidScreenState extends State<BrAidScreen> {
                           Container(
                             padding: EdgeInsets.all(12),
                             color: Colors.grey.shade200,
-                            child: Text(transcription.isEmpty
-                                ? "Recognized text will appear here"
-                                : transcription),
+                            child: Text(
+                              transcription.isEmpty
+                                  ? listening
+                                      ? "Listening..."
+                                      : "Recognized text will appear here"
+                                  : transcription,
+                              textAlign: TextAlign.center,
+                            ),
                           ),
                           SizedBox(height: getHeight(context, 10)),
                           AlertButton(
-                            onPressed:
-                                _speechRecognitionAvailable && !_isListening
-                                    ? () => start()
-                                    : null,
-                            title: _isListening ? "Listening..." : "Listen",
+                            onPressed: available && !listening
+                                ? () {
+                                    speech.listen(
+                                        onResult: (result) => print(result));
+                                    setState(() => listening = true);
+                                  }
+                                : null,
+                            title: listening ? "Listening..." : "Listen",
                           ),
+                          SizedBox(height: 4),
                           Row(
                             children: [
                               Expanded(
                                 child: AlertButton(
-                                  onPressed: _isListening
-                                      ? () {
-                                          cancel();
-
-                                          Navigator.pop(context);
-                                        }
-                                      : null,
+                                  onPressed: () {
+                                    if (listening) {
+                                      speech.stop();
+                                      speech.cancel();
+                                    } else {
+                                      Navigator.pop(context);
+                                    }
+                                  },
                                   title: "Cancel",
                                 ),
                               ),
                               SizedBox(width: 10),
                               Expanded(
                                 child: AlertButton(
-                                  onPressed: _isListening && transcription != ""
+                                  onPressed: listening && transcription != ""
                                       ? () async {
-                                          stop();
+                                          speech.stop();
 
                                           FocusScope.of(context).unfocus();
 
@@ -227,9 +218,10 @@ class _BrAidScreenState extends State<BrAidScreen> {
                                               ),
                                             );
                                           } else {
-                                            Scaffold.of(context)
+                                            ScaffoldMessenger.of(context)
                                                 .removeCurrentSnackBar();
-                                            Scaffold.of(context).showSnackBar(
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(
                                               SnackBar(
                                                 elevation: 10,
                                                 backgroundColor: kUIAccent,
@@ -260,7 +252,7 @@ class _BrAidScreenState extends State<BrAidScreen> {
             style: TextStyle(fontSize: 24, color: Colors.grey[700]),
           ),
         ),
-        FlatButton(
+        MaterialButton(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(18),
             side: BorderSide(color: kUIAccent),
@@ -289,8 +281,8 @@ class _BrAidScreenState extends State<BrAidScreen> {
                   ),
                 );
               } else {
-                Scaffold.of(context).removeCurrentSnackBar();
-                Scaffold.of(context).showSnackBar(
+                ScaffoldMessenger.of(context).removeCurrentSnackBar();
+                ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     elevation: 10,
                     backgroundColor: kUIAccent,
