@@ -20,6 +20,7 @@ class BrailleScreen extends StatefulWidget {
   final String text;
 
   BrailleScreen({@required this.data, @required this.text});
+
   @override
   _BrailleScreenState createState() => _BrailleScreenState();
 }

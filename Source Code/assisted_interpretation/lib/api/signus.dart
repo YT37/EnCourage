@@ -7,6 +7,7 @@ class Response {
   Status _status;
 
   String get url => _url;
+
   Status get status => _status;
 
   set url(String newUrl) {

@@ -9,6 +9,7 @@ class Response {
   Status _status;
 
   Map get response => _response;
+
   Status get status => _status;
 
   set response(Map newResponse) {

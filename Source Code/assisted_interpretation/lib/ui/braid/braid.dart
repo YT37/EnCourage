@@ -161,7 +161,9 @@ class _BrAidScreenState extends State<BrAidScreen> {
                               textAlign: TextAlign.center,
                             ),
                           ),
-                          SizedBox(height: getHeight(context, 10)),
+                          SizedBox(
+                            height: getHeight(context, 10),
+                          ),
                           AlertButton(
                             onPressed: available && !listening
                                 ? () {

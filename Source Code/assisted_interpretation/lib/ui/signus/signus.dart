@@ -151,7 +151,9 @@ class _SignUsScreenState extends State<SignUsScreen> {
                               color: Colors.grey.shade200,
                               child: Text(transcription),
                             ),
-                            SizedBox(height: getHeight(context, 10)),
+                            SizedBox(
+                              height: getHeight(context, 10),
+                            ),
                             AlertButton(
                               onPressed: available && !listening
                                   ? () {
