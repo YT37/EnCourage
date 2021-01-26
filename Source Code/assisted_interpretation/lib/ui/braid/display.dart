@@ -48,6 +48,7 @@ class _BrailleScreenState extends State<BrailleScreen> {
             ),
           ),
         ),
+        SizedBox(height: 15),
         Text(
           repr,
           style: TextStyle(fontSize: 18),
@@ -94,7 +95,7 @@ class _BrailleScreenState extends State<BrailleScreen> {
                           return drawCell(
                             cell: widget.data.cells[index],
                             repr: widget.data.repr.length > index
-                                ? widget.data.repr[index][1]
+                                ? widget.data.repr[index]
                                 : "",
                           );
                         },

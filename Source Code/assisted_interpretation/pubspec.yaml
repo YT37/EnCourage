@@ -15,7 +15,6 @@ dependencies:
   speech_to_text: ^3.1.0
   image_picker: ^0.6.7+21
   video_player: ^1.0.1
-  chewie: ^0.12.1+1
   http: ^0.12.2
 
 dev_dependencies:
