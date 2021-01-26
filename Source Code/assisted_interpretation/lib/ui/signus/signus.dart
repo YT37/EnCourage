@@ -36,111 +36,101 @@ class _SignUsScreenState extends State<SignUsScreen> {
   @override
   Widget build(BuildContext context) {
     return Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          SizedBox(
-            height: getHeight(context, 100),
-          ),
-          Text(
-            "Convert To Sign",
-            style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-          ),
-          SizedBox(
-            height: getHeight(context, 24),
-          ),
-          MaterialButton(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(18),
-              side: BorderSide(color: kUIAccent),
-            ),
-            onPressed: () {
-              TextEditingController controller = TextEditingController();
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        SizedBox(
+          height: getHeight(context, 100),
+        ),
+        Text(
+          "Convert To Sign",
+          style: Theme.of(context).textTheme.headline6,
+        ),
+        SizedBox(
+          height: getHeight(context, 24),
+        ),
+        TextButton(
+          onPressed: () {
+            TextEditingController controller = TextEditingController();
 
-              showDialog(
-                context: context,
-                builder: (_) => RoundedAlertDialog(
-                  titleSize: 22,
-                  title: "Type a Sentence or Word",
-                  centerTitle: true,
-                  isExpanded: false,
-                  otherWidgets: [
-                    Container(
-                      margin: EdgeInsets.only(bottom: 8),
-                      width: MediaQuery.of(context).size.width,
-                      child: TextField(
-                        maxLines: 2,
-                        minLines: 1,
-                        controller: controller,
-                        decoration: kInputDialogDecoration.copyWith(
-                            hintText: "Sentence or Word"),
-                      ),
+            showDialog(
+              context: context,
+              builder: (_) => RoundedAlertDialog(
+                title: "Type a Sentence or Word",
+                centerTitle: true,
+                isExpanded: false,
+                otherWidgets: [
+                  Container(
+                    margin: EdgeInsets.only(bottom: 8),
+                    width: MediaQuery.of(context).size.width,
+                    child: TextField(
+                      maxLines: 2,
+                      minLines: 1,
+                      controller: controller,
+                      decoration: InputDecoration(hintText: "Sentence or Word"),
                     ),
-                  ],
-                  buttonsList: [
-                    AlertButton(
-                      title: "Done",
-                      onPressed: () async {
-                        FocusScope.of(context).unfocus();
+                  ),
+                ],
+                buttonsList: [
+                  AlertButton(
+                    title: "Done",
+                    onPressed: () async {
+                      FocusScope.of(context).unfocus();
 
-                        String sentence = controller.text;
+                      String sentence = controller.text;
 
-                        Response response = await SignUsApi.getSigns(sentence);
-                        Navigator.pop(context);
-                        controller.clear();
+                      Response response = await SignUsApi.getSigns(sentence);
+                      Navigator.pop(context);
+                      controller.clear();
 
-                        if (response.status == Status.Ok) {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (BuildContext context) => SignScreen(
-                                url: response.url,
-                                word: sentence.trim().capitalize(),
-                              ),
+                      if (response.status == Status.Ok) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (BuildContext context) => SignScreen(
+                              url: response.url,
+                              text: sentence.trim().capitalize(),
                             ),
-                          );
-                        } else {
-                          ScaffoldMessenger.of(context).removeCurrentSnackBar();
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              elevation: 10,
-                              backgroundColor: kUIAccent,
-                              content: Text(
-                                "Sorry, Could'nt Convert the Text",
-                                textAlign: TextAlign.center,
-                              ),
+                          ),
+                        );
+                      } else {
+                        ScaffoldMessenger.of(context).removeCurrentSnackBar();
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              "Sorry, Could'nt Convert the Text",
+                              textAlign: TextAlign.center,
                             ),
-                          );
-                        }
-                      },
-                    )
-                  ],
-                ),
-              );
-            },
-            child: Text(
-              "Text",
-              style: TextStyle(fontSize: 24, color: Colors.grey[700]),
-            ),
+                          ),
+                        );
+                      }
+                    },
+                  )
+                ],
+              ),
+            );
+          },
+          child: Text(
+            "Text",
+            style: Theme.of(context).textTheme.headline3,
           ),
-          MaterialButton(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(18),
-              side: BorderSide(color: kUIAccent),
-            ),
-            onPressed: () {
-              showDialog(
-                  context: context,
-                  builder: (_) => SpeechDialog(
-                        speech: speech,
-                        available: available,
-                      ));
-            },
-            child: Text(
-              "Speech",
-              style: TextStyle(fontSize: 24, color: Colors.grey[700]),
-            ),
+        ),
+        TextButton(
+          onPressed: () {
+            showDialog(
+              context: context,
+              builder: (_) => SpeechDialog(
+                speech: speech,
+                available: available,
+              ),
+            );
+          },
+          child: Text(
+            "Speech",
+            style: Theme.of(context).textTheme.headline3,
           ),
-        ]);
+        ),
+      ],
+    );
   }
 }

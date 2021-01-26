@@ -18,7 +18,7 @@ class SpeechDialog extends StatefulWidget {
 }
 
 class _SpeechDialogState extends State<SpeechDialog> {
-  String transcription = "";
+  String translation = "";
   bool listening = false;
 
   @override
@@ -37,7 +37,6 @@ class _SpeechDialogState extends State<SpeechDialog> {
         return true;
       },
       child: RoundedAlertDialog(
-        titleSize: 22,
         title: "Press to Speak",
         centerTitle: true,
         isExpanded: false,
@@ -53,12 +52,13 @@ class _SpeechDialogState extends State<SpeechDialog> {
                     padding: EdgeInsets.all(12),
                     color: Colors.grey.shade200,
                     child: Text(
-                      transcription.isEmpty
+                      translation.isEmpty
                           ? listening
                               ? "Listening..."
                               : "Recognized text will appear here"
-                          : transcription,
+                          : translation,
                       textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.bodyText1,
                     ),
                   ),
                   SizedBox(
@@ -69,10 +69,10 @@ class _SpeechDialogState extends State<SpeechDialog> {
                         ? () {
                             widget.speech.listen(
                                 onResult: (result) => setState(() {
-                                      transcription = result.recognizedWords;
+                                      translation = result.recognizedWords;
                                       listening = false;
 
-                                      if (transcription != "") {
+                                      if (translation != "") {
                                         widget.speech.stop();
                                         widget.speech.cancel();
 
@@ -80,7 +80,7 @@ class _SpeechDialogState extends State<SpeechDialog> {
 
                                         FocusScope.of(context).unfocus();
 
-                                        String sentence = transcription;
+                                        String sentence = translation;
 
                                         BrAidApi.getCellsWithRepr(sentence)
                                             .then((value) {
@@ -107,8 +107,6 @@ class _SpeechDialogState extends State<SpeechDialog> {
                                             ScaffoldMessenger.of(context)
                                                 .showSnackBar(
                                               SnackBar(
-                                                elevation: 10,
-                                                backgroundColor: kUIAccent,
                                                 content: Text(
                                                   "Sorry, Could'nt Convert the Text",
                                                   textAlign: TextAlign.center,

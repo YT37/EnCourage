@@ -1,13 +1,12 @@
-import 'package:assisted_interpretation/config/constant.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
 class SignScreen extends StatefulWidget {
   final String url;
-  final String word;
+  final String text;
 
-  SignScreen({@required this.word, @required this.url});
+  SignScreen({@required this.text, @required this.url});
 
   @override
   _SignScreenState createState() => _SignScreenState();
@@ -58,27 +57,40 @@ class _SignScreenState extends State<SignScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.grey[700],
         appBar: AppBar(
-          backgroundColor: kUIAccent,
+          backgroundColor: Theme.of(context).primaryColor,
           leading: GestureDetector(
             behavior: HitTestBehavior.translucent,
             child: Icon(Icons.arrow_back_ios),
             onTap: () => Navigator.popAndPushNamed(context, "/home"),
           ),
-          title: Text("Sign For ${widget.word}"),
+          title: Text("SignUs Translation"),
           centerTitle: true,
         ),
-        body: Center(
-          child: AspectRatio(
-            aspectRatio: 16 / 9,
-            child: Container(
-              child: (playerController != null
-                  ? VideoPlayer(
-                      playerController,
-                    )
-                  : Container()),
-            ),
+        body: Padding(
+          padding: const EdgeInsets.all(12),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 12, bottom: 36),
+                child: Text(
+                  "ASL Translation for\n\"${widget.text}\"",
+                  style: Theme.of(context).textTheme.headline3,
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              AspectRatio(
+                aspectRatio: 16 / 9,
+                child: Container(
+                  child: playerController != null
+                      ? VideoPlayer(
+                          playerController,
+                        )
+                      : Container(),
+                ),
+              ),
+            ],
           ),
         ),
       ),

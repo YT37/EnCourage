@@ -37,7 +37,6 @@ class _SpeechDialogState extends State<SpeechDialog> {
         return true;
       },
       child: RoundedAlertDialog(
-        titleSize: 22,
         title: "Press to Speak",
         centerTitle: true,
         isExpanded: false,
@@ -59,6 +58,7 @@ class _SpeechDialogState extends State<SpeechDialog> {
                               : "Recognized text will appear here"
                           : transcription,
                       textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.bodyText1,
                     ),
                   ),
                   SizedBox(height: getHeight(context, 10)),
@@ -66,56 +66,57 @@ class _SpeechDialogState extends State<SpeechDialog> {
                     onPressed: widget.available && !listening
                         ? () {
                             widget.speech.listen(
-                                onResult: (result) => setState(() {
-                                      transcription = result.recognizedWords;
-                                      listening = false;
+                              onResult: (result) => setState(
+                                () {
+                                  transcription = result.recognizedWords;
+                                  listening = false;
 
-                                      if (transcription != "") {
-                                        widget.speech.stop();
-                                        widget.speech.cancel();
+                                  if (transcription != "") {
+                                    widget.speech.stop();
+                                    widget.speech.cancel();
 
-                                        listening = false;
+                                    listening = false;
 
-                                        FocusScope.of(context).unfocus();
+                                    FocusScope.of(context).unfocus();
 
-                                        String sentence = transcription;
+                                    String sentence = transcription;
 
-                                        SignUsApi.getSigns(sentence)
-                                            .then((value) {
-                                          Response response = value;
+                                    SignUsApi.getSigns(sentence).then(
+                                      (value) {
+                                        Response response = value;
 
-                                          Navigator.pop(context);
+                                        Navigator.pop(context);
 
-                                          if (response.status == Status.Ok) {
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder:
-                                                    (BuildContext context) =>
-                                                        SignScreen(
-                                                  url: response.url,
-                                                  word: sentence,
-                                                ),
+                                        if (response.status == Status.Ok) {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (BuildContext context) =>
+                                                  SignScreen(
+                                                url: response.url,
+                                                text: sentence,
                                               ),
-                                            );
-                                          } else {
-                                            ScaffoldMessenger.of(context)
-                                                .removeCurrentSnackBar();
-                                            ScaffoldMessenger.of(context)
-                                                .showSnackBar(
-                                              SnackBar(
-                                                elevation: 10,
-                                                backgroundColor: kUIAccent,
-                                                content: Text(
-                                                  "Sorry, Could'nt Convert the Text",
-                                                  textAlign: TextAlign.center,
-                                                ),
+                                            ),
+                                          );
+                                        } else {
+                                          ScaffoldMessenger.of(context)
+                                              .removeCurrentSnackBar();
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            SnackBar(
+                                              content: Text(
+                                                "Sorry, Could'nt Convert the Text",
+                                                textAlign: TextAlign.center,
                                               ),
-                                            );
-                                          }
-                                        });
-                                      }
-                                    }));
+                                            ),
+                                          );
+                                        }
+                                      },
+                                    );
+                                  }
+                                },
+                              ),
+                            );
 
                             setState(() => listening = true);
                           }

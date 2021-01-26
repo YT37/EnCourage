@@ -1,4 +1,3 @@
-import 'package:assisted_interpretation/config/constant.dart';
 import 'package:assisted_interpretation/ui/braid/braid.dart';
 import 'package:assisted_interpretation/ui/signus/signus.dart';
 import 'package:assisted_interpretation/widgets/alert_button.dart';
@@ -52,15 +51,11 @@ class _HomeScreenState extends State<HomeScreen> {
             title: "Do you want to quit the app?",
             buttonsList: [
               AlertButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
+                onPressed: () => Navigator.pop(context),
                 title: "No",
               ),
               AlertButton(
-                onPressed: () {
-                  SystemNavigator.pop();
-                },
+                onPressed: () => SystemNavigator.pop(),
                 title: "Yes",
               )
             ],
@@ -69,7 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
       },
       child: SafeArea(
         child: Scaffold(
-          backgroundColor: kUIColor,
+          backgroundColor: Theme.of(context).accentColor,
           resizeToAvoidBottomInset: false,
           body: Container(
             padding: EdgeInsets.all(12),

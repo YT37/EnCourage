@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:math';
 
-import 'package:assisted_interpretation/config/constant.dart';
 import 'package:assisted_interpretation/ui/home.dart';
 import 'package:flutter/material.dart';
 
@@ -55,58 +54,72 @@ class _SplashScreenState extends State<SplashScreen>
 
   @override
   Widget build(BuildContext context) {
-    return Stack(children: [
-      Container(
-        width: double.infinity,
-        height: double.infinity,
-        color: pow(holeSize.value / 2, 2) > 0.9 ? kUIColor : kUIAccent,
-      ),
-      if (holeSize.value < 1.5)
-        Center(
-          child: Hero(
-            tag: "logo",
-            child: Material(
-              type: MaterialType.transparency,
-              child: Container(
-                child: Center(
-                  child: Text(
-                    "AI",
-                    style: TextStyle(fontSize: 95, color: kUIColor),
+    return Stack(
+      children: [
+        Container(
+          width: double.infinity,
+          height: double.infinity,
+          color: pow(holeSize.value / 2, 2) > 0.9
+              ? Theme.of(context).accentColor
+              : Theme.of(context).primaryColor,
+        ),
+        if (holeSize.value < 1.5)
+          Center(
+            child: Hero(
+              tag: "logo",
+              child: Material(
+                type: MaterialType.transparency,
+                child: Container(
+                  child: Center(
+                    child: Text(
+                      "AI",
+                      style: TextStyle(
+                        fontSize: 95,
+                        color: Theme.of(context).accentColor,
+                      ),
+                    ),
                   ),
                 ),
               ),
             ),
           ),
+        Opacity(
+          opacity: pow(holeSize.value / 2, 2),
+          child: HomeScreen(),
         ),
-      Opacity(
-        opacity: pow(holeSize.value / 2, 2),
-        child: HomeScreen(),
-      ),
-      if (holeSize.value < 1.5)
-        Container(
-          width: double.infinity,
-          height: double.infinity,
-          child: CustomPaint(
-            painter: AnimatedCircle(circleSize: holeSize.value * size.height),
+        if (holeSize.value < 1.5)
+          Container(
+            width: double.infinity,
+            height: double.infinity,
+            child: CustomPaint(
+              painter: AnimatedCircle(
+                circleSize: holeSize.value * size.height,
+                accentColor: Theme.of(context).accentColor,
+              ),
+            ),
           ),
-        ),
-    ]);
+      ],
+    );
   }
 }
 
 class AnimatedCircle extends CustomPainter {
   AnimatedCircle({
     @required this.circleSize,
+    @required this.accentColor,
   });
 
   double circleSize;
+  Color accentColor;
 
   @override
   void paint(Canvas canvas, Size size) {
     double radius = circleSize / 2;
     Rect rect = Rect.fromLTWH(0, 0, size.width, size.height);
     Rect rCircle = Rect.fromCircle(
-        center: Offset(size.width / 2, size.height / 2), radius: radius);
+      center: Offset(size.width / 2, size.height / 2),
+      radius: radius,
+    );
 
     Path circle = Path.combine(
       PathOperation.intersect,
@@ -116,11 +129,9 @@ class AnimatedCircle extends CustomPainter {
         ..close(),
     );
 
-    canvas.drawPath(circle, Paint()..color = kUIColor);
+    canvas.drawPath(circle, Paint()..color = accentColor);
   }
 
   @override
-  bool shouldRepaint(CustomPainter oldDelegate) {
-    return true;
-  }
+  bool shouldRepaint(CustomPainter oldDelegate) => true;
 }

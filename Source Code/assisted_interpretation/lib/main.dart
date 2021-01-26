@@ -1,6 +1,6 @@
 import 'dart:ui' as ui;
 
-import 'package:assisted_interpretation/config/constant.dart';
+import 'package:assisted_interpretation/config/theme.dart';
 import 'package:assisted_interpretation/ui/export.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -25,8 +25,7 @@ class AssisstedInterpratation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(
-          highlightColor: Colors.blueGrey, fontFamily: "sans-serif-condensed"),
+      theme: AppTheme.light,
       builder: (BuildContext context, Widget widget) =>
           ResponsiveWrapper.builder(
         BouncingScrollWrapper.builder(
@@ -43,7 +42,7 @@ class AssisstedInterpratation extends StatelessWidget {
           ResponsiveBreakpoint.resize(1200, name: DESKTOP),
           ResponsiveBreakpoint.autoScale(2460, name: "4K"),
         ],
-        background: Container(color: kUIColor),
+        background: Container(color: Theme.of(context).accentColor),
       ),
       title: 'assisted_interpretation',
       initialRoute: "/",

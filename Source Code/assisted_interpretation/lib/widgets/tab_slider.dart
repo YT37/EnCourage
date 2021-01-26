@@ -1,4 +1,3 @@
-import 'package:assisted_interpretation/config/constant.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -8,11 +7,7 @@ class TabSlider extends StatefulWidget {
   final List<String> tabNames;
   final List<Function> screens;
   final double width;
-  final double height;
-  final Duration animDuration;
-  final Color textColor;
   final bool isDynamic;
-  final EdgeInsets margin;
   final Function onChanged;
   ValueNotifier<int> currentIndex;
 
@@ -21,12 +16,8 @@ class TabSlider extends StatefulWidget {
       @required this.tabNames,
       @required this.screens,
       this.width = 200,
-      this.height = 30,
-      this.animDuration = const Duration(milliseconds: 300),
-      this.textColor = kUIColor,
       this.isDynamic = false,
       this.currentIndex,
-      this.margin = const EdgeInsets.only(top: 12, bottom: 24),
       this.onChanged});
 
   final _TabSliderState state = _TabSliderState();
@@ -51,67 +42,71 @@ class _TabSliderState extends State<TabSlider> {
     return ValueListenableBuilder<int>(
       valueListenable: widget.currentIndex,
       builder: (BuildContext context, value, child) => Container(
-        margin: widget.margin,
-        child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-          Container(
-            height: widget.height,
-            width: sliderWidth,
-            decoration: BoxDecoration(
-              color: kUIAccent,
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: Stack(children: [
-              Padding(
-                padding: EdgeInsets.fromLTRB(0, 6, 0, 8),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: List.generate(
-                    widget.tabNames.length,
-                    (index) => Expanded(
-                      child: GestureDetector(
-                        onTap: () {
-                          if (mounted) {
-                            setState(() {
-                              widget.currentIndex.value = index;
-                              widget.onChanged == null
-                                  ? widget.parent.setState(() {
-                                      widget.parent.screen =
-                                          widget.screens[index]();
-                                    })
-                                  : widget.onChanged(index);
-                            });
-                          }
-                        },
-                        child: Text(
-                          widget.tabNames[index],
-                          style: TextStyle(
-                            color: widget.textColor,
-                            fontSize: getHeight(context, 16),
+        margin: const EdgeInsets.only(top: 12, bottom: 24),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              height: 35,
+              width: sliderWidth,
+              decoration: BoxDecoration(
+                color: Theme.of(context).primaryColor,
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Stack(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(0, 6, 0, 8),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: List.generate(
+                        widget.tabNames.length,
+                        (index) => Expanded(
+                          child: GestureDetector(
+                            onTap: () {
+                              if (mounted) {
+                                setState(() {
+                                  widget.currentIndex.value = index;
+                                  widget.onChanged == null
+                                      ? widget.parent.setState(() {
+                                          widget.parent.screen =
+                                              widget.screens[index]();
+                                        })
+                                      : widget.onChanged(index);
+                                });
+                              }
+                            },
+                            child: Center(
+                              child: Text(
+                                widget.tabNames[index],
+                                style: Theme.of(context).textTheme.bodyText2,
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
                           ),
-                          textAlign: TextAlign.center,
                         ),
                       ),
                     ),
                   ),
-                ),
-              ),
-              AnimatedPositioned(
-                duration: widget.animDuration,
-                curve: Curves.easeInOut,
-                left: widget.currentIndex.value *
-                    (sliderWidth / widget.tabNames.length),
-                child: Container(
-                  width: sliderWidth / widget.tabNames.length,
-                  height: widget.height,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: kUIColor.withOpacity(0.3),
+                  AnimatedPositioned(
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.easeInOut,
+                    left: widget.currentIndex.value *
+                        (sliderWidth / widget.tabNames.length),
+                    child: Container(
+                      width: sliderWidth / widget.tabNames.length,
+                      height: 35,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: Theme.of(context).highlightColor,
+                      ),
+                    ),
                   ),
-                ),
+                ],
               ),
-            ]),
-          ),
-        ]),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -1,4 +1,3 @@
-import 'package:assisted_interpretation/config/constant.dart';
 import 'package:flutter/material.dart';
 
 class BrailleData {
@@ -48,10 +47,10 @@ class _BrailleScreenState extends State<BrailleScreen> {
             ),
           ),
         ),
-        SizedBox(height: 15),
+        SizedBox(height: 6),
         Text(
           repr,
-          style: TextStyle(fontSize: 18),
+          style: Theme.of(context).textTheme.caption,
         ),
       ],
     );
@@ -62,7 +61,7 @@ class _BrailleScreenState extends State<BrailleScreen> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: kUIAccent,
+          backgroundColor: Theme.of(context).primaryColor,
           leading: GestureDetector(
             behavior: HitTestBehavior.translucent,
             child: Icon(Icons.arrow_back_ios),
@@ -79,7 +78,7 @@ class _BrailleScreenState extends State<BrailleScreen> {
                 padding: const EdgeInsets.only(bottom: 24),
                 child: Text(
                   "Braille Translation for\n\"${widget.text}\"",
-                  style: TextStyle(fontSize: 24),
+                  style: Theme.of(context).textTheme.headline3,
                   textAlign: TextAlign.center,
                 ),
               ),
