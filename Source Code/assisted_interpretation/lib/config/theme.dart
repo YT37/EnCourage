@@ -32,7 +32,7 @@ class AppTheme {
           fontSize: 30,
           fontWeight: FontWeight.bold,
         ),
-        caption: TextStyle(color: darkText, fontSize: 16),
+        caption: TextStyle(color: darkText),
         bodyText2: TextStyle(
           color: lightText,
           fontSize: 16,
@@ -70,6 +70,7 @@ class AppTheme {
         contentTextStyle: TextStyle(color: accentColor),
         elevation: 10,
       ),
+      dividerTheme: DividerThemeData(color: Colors.grey[400]),
     );
   }
 }
