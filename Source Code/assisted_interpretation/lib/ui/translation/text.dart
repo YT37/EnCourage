@@ -97,7 +97,7 @@ class _TextTranslationState extends State<TextTranslation> {
         ),
         SizedBox(height: 12.getHeight(context)),
         Container(
-          height: MediaQuery.of(context).size.height / 3.1,
+          height: MediaQuery.of(context).size.height / 3.5,
           child: response != null
               ? widget.translateTo == "Braille"
                   ? BrailleDisplay(BrailleData.fromMap(response.response))
@@ -106,10 +106,9 @@ class _TextTranslationState extends State<TextTranslation> {
                   translating
                       ? "Translating..."
                       : "Converted Text will appear here",
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline3
-                      .copyWith(fontWeight: FontWeight.w500, fontSize: 22),
+                  style: Theme.of(context).textTheme.headline3.copyWith(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 22.getHeight(context)),
                 ),
         ),
       ],

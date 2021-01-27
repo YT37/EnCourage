@@ -43,6 +43,7 @@ class _SpeechTranslationState extends State<SpeechTranslation> {
         response = null;
         recognized = result.recognizedWords;
         listening = false;
+        translating = true;
 
         BrAidApi.getCellsWithRepr(recognized.trim())
             .then((value) => setState(() => response = value))
@@ -79,10 +80,8 @@ class _SpeechTranslationState extends State<SpeechTranslation> {
           height: 75.getHeight(context),
           child: Text(
             recognized != "" ? recognized : "The spoken text will appear here",
-            style: Theme.of(context)
-                .textTheme
-                .headline3
-                .copyWith(fontWeight: FontWeight.w500, fontSize: 22),
+            style: Theme.of(context).textTheme.headline3.copyWith(
+                fontWeight: FontWeight.w500, fontSize: 22.getHeight(context)),
           ),
         ),
         Divider(height: 48.getHeight(context)),
@@ -92,7 +91,7 @@ class _SpeechTranslationState extends State<SpeechTranslation> {
         ),
         SizedBox(height: 12.getHeight(context)),
         Container(
-          height: MediaQuery.of(context).size.height / 3.1,
+          height: MediaQuery.of(context).size.height / 3.5,
           child: response != null
               ? widget.translateTo == "Braille"
                   ? BrailleDisplay(BrailleData.fromMap(response.response))
@@ -101,10 +100,9 @@ class _SpeechTranslationState extends State<SpeechTranslation> {
                   translating
                       ? "Translating..."
                       : "Converted Text will appear here",
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline3
-                      .copyWith(fontWeight: FontWeight.w500, fontSize: 22),
+                  style: Theme.of(context).textTheme.headline3.copyWith(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 22.getHeight(context)),
                 ),
         ),
       ],

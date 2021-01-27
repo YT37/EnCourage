@@ -16,5 +16,5 @@ extension StringExtension on String {
 
 extension IntExtension on int {
   double getHeight(BuildContext context) =>
-      MediaQuery.of(context).size.height * this / 816;
+      MediaQuery.of(context).size.height * this / 797.71;
 }

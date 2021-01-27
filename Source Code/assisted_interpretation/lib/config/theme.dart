@@ -1,7 +1,8 @@
+import 'package:assisted_interpretation/config/extensions.dart';
 import 'package:flutter/material.dart';
 
 class AppTheme {
-  static ThemeData get light {
+  static ThemeData light(context) {
     Color primaryColor = Color(0xff315cf5);
     // Color primaryColor = Color(0xff43bfb2);
     Color accentColor = Color(0xffFBFBFB);
@@ -19,23 +20,23 @@ class AppTheme {
       textTheme: Typography.blackHelsinki.copyWith(
         headline2: TextStyle(
           color: darkText,
-          fontSize: 22,
+          fontSize: 22.getHeight(context),
           fontWeight: FontWeight.bold,
         ),
         headline3: TextStyle(
           color: Colors.grey[700],
-          fontSize: 24,
+          fontSize: 24.getHeight(context),
           fontWeight: FontWeight.bold,
         ),
         headline6: TextStyle(
           color: darkText,
-          fontSize: 30,
+          fontSize: 30.getHeight(context),
           fontWeight: FontWeight.bold,
         ),
         caption: TextStyle(color: darkText),
         bodyText2: TextStyle(
           color: lightText,
-          fontSize: 16,
+          fontSize: 16.getHeight(context),
           fontWeight: FontWeight.bold,
           letterSpacing: 0.2,
         ),
@@ -54,7 +55,7 @@ class AppTheme {
         style: ButtonStyle(
           padding: MaterialStateProperty.all(
             EdgeInsets.symmetric(
-              horizontal: 18,
+              horizontal: 18.getHeight(context),
             ),
           ),
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(

@@ -43,8 +43,8 @@ class BrailleDisplay extends StatelessWidget {
     return Scrollbar(
       child: SingleChildScrollView(
         child: Wrap(
-          spacing: 12,
-          runSpacing: 12,
+          spacing: 12.getHeight(context),
+          runSpacing: 12.getHeight(context),
           children: List.generate(
             data.cells.length,
             (int index) => drawCell(

@@ -93,11 +93,12 @@ class _HomeScreenState extends State<HomeScreen> {
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyText1
-                                  .copyWith(fontSize: 18),
+                                  .copyWith(fontSize: 18.getHeight(context)),
                             ),
                             Container(
                               padding: EdgeInsets.symmetric(
-                                  vertical: 1, horizontal: 20),
+                                  vertical: 1.getHeight(context),
+                                  horizontal: 20.getHeight(context)),
                               decoration: BoxDecoration(
                                 gradient: LinearGradient(
                                   colors: [
@@ -112,7 +113,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                               child: Icon(
                                 Icons.swap_horiz,
-                                size: 26,
+                                size: 26.getHeight(context),
                                 color: Theme.of(context)
                                     .accentColor
                                     .withOpacity(0.9),
@@ -127,7 +128,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 padding: EdgeInsets.only(left: 4),
                                 child: Icon(
                                   Icons.keyboard_arrow_down,
-                                  size: 20,
+                                  size: 20.getHeight(context),
                                   color: Colors.grey[800],
                                 ),
                               ),
@@ -143,7 +144,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                           style: Theme.of(context)
                                               .textTheme
                                               .bodyText1
-                                              .copyWith(fontSize: 18),
+                                              .copyWith(
+                                                  fontSize:
+                                                      18.getHeight(context)),
                                         ),
                                         value: option),
                                   )
@@ -151,7 +154,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ],
                         ),
-                        Divider(height: 48.getHeight(context)),
+                        Divider(height: 40.getHeight(context)),
                         translationScreen,
                       ],
                     ),
