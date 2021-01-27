@@ -1,5 +1,7 @@
+import 'package:assisted_interpretation/config/extensions.dart';
 import 'package:assisted_interpretation/ui/mode_selection.dart';
-import 'package:assisted_interpretation/ui/translation.dart';
+import 'package:assisted_interpretation/ui/translation/speech.dart';
+import 'package:assisted_interpretation/ui/translation/text.dart';
 import 'package:assisted_interpretation/widgets/alert_button.dart';
 import 'package:assisted_interpretation/widgets/rounded_alert_dialog.dart';
 import 'package:flutter/material.dart';
@@ -11,10 +13,29 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  // final List<String> translateFromOptions = ["English"];
+  final List<String> translateToOptions = ["Braille", "ASL"];
+
+  String translateFrom = "English";
+  String translateTo = "Braille";
+
   String mode = "text";
 
   @override
   Widget build(BuildContext context) {
+    dynamic translationScreen;
+
+    if (mode == "text")
+      translationScreen = TextTranslation(
+        translateFrom: translateFrom,
+        translateTo: translateTo,
+      );
+    else if (mode == "speech")
+      translationScreen = SpeechTranslation(
+        translateFrom: translateFrom,
+        translateTo: translateTo,
+      );
+
     return WillPopScope(
       onWillPop: () async {
         return showDialog(
@@ -45,7 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                SizedBox(height: 6),
+                SizedBox(height: 6.getHeight(context)),
                 Stack(
                   children: [
                     Icon(Icons.menu),
@@ -57,11 +78,91 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ],
                 ),
-                SizedBox(height: 24),
-                Expanded(child: TranslationScreen()),
+                SizedBox(height: 24.getHeight(context)),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Text(
+                              translateFrom,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyText1
+                                  .copyWith(fontSize: 18),
+                            ),
+                            Container(
+                              padding: EdgeInsets.symmetric(
+                                  vertical: 1, horizontal: 20),
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  colors: [
+                                    Theme.of(context).primaryColor,
+                                    Color(0xff43bfb2).withOpacity(0.85),
+                                  ],
+                                  begin: Alignment.centerRight,
+                                  end: Alignment.centerLeft,
+                                  stops: [0.35, 0.95],
+                                ),
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                              child: Icon(
+                                Icons.swap_horiz,
+                                size: 26,
+                                color: Theme.of(context)
+                                    .accentColor
+                                    .withOpacity(0.9),
+                              ),
+                            ),
+                            DropdownButton<String>(
+                              value: translateTo,
+                              underline: Container(),
+                              elevation: 1,
+                              dropdownColor: Theme.of(context).accentColor,
+                              icon: Padding(
+                                padding: EdgeInsets.only(left: 4),
+                                child: Icon(
+                                  Icons.keyboard_arrow_down,
+                                  size: 20,
+                                  color: Colors.grey[800],
+                                ),
+                              ),
+                              onChanged: (String option) {
+                                if (translateTo != option)
+                                  setState(() => translateTo = option);
+                              },
+                              items: translateToOptions
+                                  .map<DropdownMenuItem<String>>(
+                                    (String option) => DropdownMenuItem(
+                                        child: Text(
+                                          option,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyText1
+                                              .copyWith(fontSize: 18),
+                                        ),
+                                        value: option),
+                                  )
+                                  .toList(),
+                            ),
+                          ],
+                        ),
+                        Divider(height: 48.getHeight(context)),
+                        translationScreen,
+                      ],
+                    ),
+                  ),
+                ),
                 Center(
                   child: ModeSelectionWheel(
-                    (String _mode) => setState(() => mode = _mode),
+                    onChangeMode: (String _mode) =>
+                        setState(() => mode = _mode),
+                    onTapSelected: (String mode) =>
+                        translationScreen.onTapSelected(mode),
                   ),
                 ),
               ],

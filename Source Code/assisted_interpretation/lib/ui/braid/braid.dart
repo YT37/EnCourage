@@ -1,5 +1,6 @@
 import 'package:assisted_interpretation/api/braid.dart';
-import 'package:assisted_interpretation/config/constant.dart';
+import 'package:assisted_interpretation/api/response.dart';
+import 'package:assisted_interpretation/config/extensions.dart';
 import 'package:assisted_interpretation/ui/braid/components/speech_dialog.dart';
 import 'package:assisted_interpretation/widgets/alert_button.dart';
 import 'package:assisted_interpretation/widgets/rounded_alert_dialog.dart';
@@ -40,14 +41,14 @@ class _BrAidScreenState extends State<BrAidScreen> {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         SizedBox(
-          height: getHeight(context, 100),
+          height: 100.getHeight(context),
         ),
         Text(
           "Convert To Braille",
           style: Theme.of(context).textTheme.headline6,
         ),
         SizedBox(
-          height: getHeight(context, 24),
+          height: 24.getHeight(context),
         ),
         TextButton(
           onPressed: () {

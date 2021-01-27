@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 class AppTheme {
   static ThemeData get light {
-    // Color primaryColor = Color(0xff335CEA);
-    Color primaryColor = Color(0xff43bfb2);
-    // Color accentColor = Color(0xffFBFBFB);
-    Color accentColor = Color(0xffF5F9F9);
+    Color primaryColor = Color(0xff315cf5);
+    // Color primaryColor = Color(0xff43bfb2);
+    Color accentColor = Color(0xffFBFBFB);
+    // Color accentColor = Color(0xffF5F9F9);
     Color highlightColor = accentColor.withOpacity(0.3);
     Color disabledColor = Colors.grey[300];
     Color lightText = Color(0xffF5F9F9);

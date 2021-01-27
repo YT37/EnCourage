@@ -1,5 +1,6 @@
 import 'package:assisted_interpretation/api/braid.dart';
-import 'package:assisted_interpretation/config/constant.dart';
+import 'package:assisted_interpretation/api/response.dart';
+import 'package:assisted_interpretation/config/extensions.dart';
 import 'package:assisted_interpretation/ui/braid/display.dart';
 import 'package:assisted_interpretation/widgets/alert_button.dart';
 import 'package:assisted_interpretation/widgets/rounded_alert_dialog.dart';
@@ -62,63 +63,66 @@ class _SpeechDialogState extends State<SpeechDialog> {
                     ),
                   ),
                   SizedBox(
-                    height: getHeight(context, 10),
+                    height: 10.getHeight(context),
                   ),
                   AlertButton(
                     onPressed: widget.available && !listening
                         ? () {
-                            widget.speech.listen(
-                                onResult: (result) => setState(() {
-                                      translation = result.recognizedWords;
-                                      listening = false;
-
-                                      if (translation != "") {
-                                        widget.speech.stop();
-                                        widget.speech.cancel();
-
-                                        listening = false;
-
-                                        FocusScope.of(context).unfocus();
-
-                                        String sentence = translation;
-
-                                        BrAidApi.getCellsWithRepr(sentence)
-                                            .then((value) {
-                                          Response response = value;
-
-                                          Navigator.pop(context);
-
-                                          if (response.status == Status.Ok) {
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder:
-                                                    (BuildContext context) =>
-                                                        BrailleScreen(
-                                                  data: BrailleData.fromMap(
-                                                      response.response),
-                                                  text: sentence,
-                                                ),
-                                              ),
-                                            );
-                                          } else {
-                                            ScaffoldMessenger.of(context)
-                                                .removeCurrentSnackBar();
-                                            ScaffoldMessenger.of(context)
-                                                .showSnackBar(
-                                              SnackBar(
-                                                content: Text(
-                                                  "Sorry, Could'nt Convert the Text",
-                                                  textAlign: TextAlign.center,
-                                                ),
-                                              ),
-                                            );
-                                          }
-                                        });
-                                      }
-                                    }));
-
                             setState(() => listening = true);
+
+                            widget.speech.listen(
+                              onResult: (result) => setState(
+                                () {
+                                  translation = result.recognizedWords;
+                                  listening = false;
+
+                                  if (translation != "") {
+                                    widget.speech.stop();
+                                    widget.speech.cancel();
+
+                                    listening = false;
+
+                                    FocusScope.of(context).unfocus();
+
+                                    String sentence = translation;
+
+                                    BrAidApi.getCellsWithRepr(sentence).then(
+                                      (value) {
+                                        Response response = value;
+
+                                        Navigator.pop(context);
+
+                                        if (response.status == Status.Ok) {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (BuildContext context) =>
+                                                  BrailleScreen(
+                                                data: BrailleData.fromMap(
+                                                    response.response),
+                                                text: sentence,
+                                              ),
+                                            ),
+                                          );
+                                        } else {
+                                          ScaffoldMessenger.of(context)
+                                              .removeCurrentSnackBar();
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            SnackBar(
+                                              content: Text(
+                                                "Sorry, Could'nt Convert the Text",
+                                                textAlign: TextAlign.center,
+                                              ),
+                                            ),
+                                          );
+                                        }
+                                      },
+                                    );
+                                  }
+                                },
+                              ),
+                            );
                           }
                         : null,
                     title: listening ? "Listening..." : "Listen",
