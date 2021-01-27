@@ -1,6 +1,19 @@
 import 'package:assisted_interpretation/config/extensions.dart';
-import 'package:assisted_interpretation/ui/braid/display.dart';
 import 'package:flutter/material.dart';
+
+class BrailleData {
+  final List cells;
+  final List repr;
+
+  BrailleData({this.cells, this.repr = const []});
+
+  static BrailleData fromMap(Map map) {
+    return BrailleData(
+      cells: map["cells"],
+      repr: map["repr"] != null ? map["repr"] : [],
+    );
+  }
+}
 
 class BrailleDisplay extends StatelessWidget {
   final BrailleData data;

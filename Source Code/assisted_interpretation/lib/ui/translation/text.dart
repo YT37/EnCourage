@@ -1,7 +1,6 @@
 import 'package:assisted_interpretation/api/braid.dart';
 import 'package:assisted_interpretation/api/response.dart';
 import 'package:assisted_interpretation/config/extensions.dart';
-import 'package:assisted_interpretation/ui/braid/display.dart';
 import 'package:flutter/material.dart';
 
 import 'display/braille.dart';

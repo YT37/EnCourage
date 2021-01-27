@@ -1,9 +1,8 @@
 import 'package:assisted_interpretation/api/braid.dart';
 import 'package:assisted_interpretation/api/response.dart';
 import 'package:assisted_interpretation/config/extensions.dart';
-import 'package:assisted_interpretation/ui/braid/display.dart';
 import 'package:flutter/material.dart';
-import 'package:speech_to_text/speech_to_text.dart' as stt;
+import 'package:speech_recognition/speech_recognition.dart';
 
 import 'display/braille.dart';
 
@@ -29,41 +28,39 @@ class _SpeechTranslationState extends State<SpeechTranslation> {
   Response response;
   bool translating = false;
 
-  stt.SpeechToText speech;
+  SpeechRecognition speech;
 
   bool available = false;
   bool listening = false;
   String recognized = "";
 
   void listen() {
-    setState(() => listening = true);
-
-    speech.listen(
-      onResult: (result) => setState(() {
-        response = null;
-        recognized = result.recognizedWords;
-        listening = false;
-        translating = true;
-
-        BrAidApi.getCellsWithRepr(recognized.trim())
-            .then((value) => setState(() => response = value))
-            .whenComplete(() => setState(() => translating = false));
-      }),
-    );
+    speech
+        .listen(locale: "en_US")
+        .then((result) => print('_MyAppState.start => result $result'));
   }
 
   @override
   void initState() {
     super.initState();
 
-    speech = stt.SpeechToText();
-
+    speech = SpeechRecognition();
     speech
-        .initialize(
-          onStatus: (status) => print("Status: $status"),
-          onError: (error) => print("Error: $error"),
-        )
-        .then((value) => available = value);
+        .setAvailabilityHandler((result) => setState(() => available = result));
+    speech.setRecognitionStartedHandler(() => setState(() => listening = true));
+    speech.setRecognitionResultHandler((String text) => setState(() {
+          response = null;
+          translating = true;
+
+          recognized = text;
+
+          BrAidApi.getCellsWithRepr(recognized.trim())
+              .then((value) => setState(() => response = value))
+              .whenComplete(() => setState(() => translating = false));
+        }));
+    speech
+        .setRecognitionCompleteHandler(() => setState(() => listening = false));
+    speech.activate().then((res) => setState(() => available = res));
   }
 
   @override

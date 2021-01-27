@@ -50,8 +50,6 @@ class AssisstedInterpratation extends StatelessWidget {
       routes: {
         "/": (BuildContext context) => SplashScreen(),
         "/home": (BuildContext context) => HomeScreen(),
-        "/braid": (BuildContext context) => BrAidScreen(),
-        "/signus": (BuildContext context) => SignUsScreen(),
       },
     );
   }

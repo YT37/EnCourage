@@ -83,7 +83,7 @@ class _ModeSelectionWheelState extends State<ModeSelectionWheel> {
 
     return Container(
       height: 100.getHeight(context),
-      width: MediaQuery.of(context).size.width / 2,
+      width: 180 * (MediaQuery.of(context).size.width / 411),
       child: Stack(
         children: bubbles,
       ),
