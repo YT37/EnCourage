@@ -1,3 +1,4 @@
+import 'package:assisted_interpretation/config/extensions.dart';
 import 'package:flutter/material.dart';
 
 class BrailleData {
@@ -36,7 +37,7 @@ class _BrailleScreenState extends State<BrailleScreen> {
               2,
               (int y) => Container(
                 margin: const EdgeInsets.all(4),
-                height: 12,
+                height: 12.getHeight(context),
                 width: 12,
                 decoration: BoxDecoration(
                   color: cell[2 * x + y] == 1 ? Colors.black : Colors.white,
@@ -47,7 +48,7 @@ class _BrailleScreenState extends State<BrailleScreen> {
             ),
           ),
         ),
-        SizedBox(height: 6),
+        SizedBox(height: 6.getHeight(context)),
         Text(
           repr,
           style: Theme.of(context).textTheme.caption,

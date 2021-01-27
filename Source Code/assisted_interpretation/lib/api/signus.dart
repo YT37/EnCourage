@@ -1,28 +1,6 @@
 import 'package:http/http.dart' as http;
 
-enum Status { Ok, Error }
-
-class Response {
-  String _url;
-  Status _status;
-
-  String get url => _url;
-
-  Status get status => _status;
-
-  set url(String newUrl) {
-    this._url = newUrl;
-  }
-
-  set status(Status newStatus) {
-    this._status = newStatus;
-  }
-
-  Response({String url, Status status}) {
-    this._url = url;
-    this._status = status;
-  }
-}
+import 'response.dart';
 
 class SignUsApi {
   static Future<Response> getSigns(String sentence) async {
@@ -33,10 +11,10 @@ class SignUsApi {
 
     print("Fetched Results! Status Code: ${token.statusCode}");
 
-    Response response = Response(url: "", status: Status.Ok);
+    Response response = Response(response: {"url": ""}, status: Status.Ok);
 
     if (token.statusCode == 200)
-      response.url = token.body;
+      response.response = {"url": token.body};
     else
       response.status = Status.Error;
 

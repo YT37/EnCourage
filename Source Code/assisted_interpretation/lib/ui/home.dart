@@ -1,8 +1,9 @@
-import 'package:assisted_interpretation/ui/braid/braid.dart';
-import 'package:assisted_interpretation/ui/signus/signus.dart';
+import 'package:assisted_interpretation/config/extensions.dart';
+import 'package:assisted_interpretation/ui/mode_selection.dart';
+import 'package:assisted_interpretation/ui/translation/speech.dart';
+import 'package:assisted_interpretation/ui/translation/text.dart';
 import 'package:assisted_interpretation/widgets/alert_button.dart';
 import 'package:assisted_interpretation/widgets/rounded_alert_dialog.dart';
-import 'package:assisted_interpretation/widgets/tab_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -12,37 +13,29 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  var slider;
+  // final List<String> translateFromOptions = ["English"];
+  final List<String> translateToOptions = ["Braille", "ASL"];
 
-  final List screens = [BrAidScreen(), SignUsScreen()];
-  final PageController _pageController = PageController(initialPage: 0);
+  String translateFrom = "English";
+  String translateTo = "Braille";
 
-  int currentPage = 0;
-  int toPage;
-
-  @override
-  void initState() {
-    super.initState();
-
-    slider = TabSlider(
-        parent: this,
-        isDynamic: true,
-        currentIndex: ValueNotifier(0),
-        tabNames: ["BrAid", "SignUs"],
-        screens: screens.map((e) => () => e).toList(),
-        onChanged: (int index) {
-          setState(() {
-            toPage = index;
-
-            _pageController.animateToPage(index,
-                duration: Duration(milliseconds: 200), curve: Curves.easeIn);
-          });
-        },
-        width: 300);
-  }
+  String mode = "text";
 
   @override
   Widget build(BuildContext context) {
+    dynamic translationScreen;
+
+    if (mode == "text")
+      translationScreen = TextTranslation(
+        translateFrom: translateFrom,
+        translateTo: translateTo,
+      );
+    else if (mode == "speech")
+      translationScreen = SpeechTranslation(
+        translateFrom: translateFrom,
+        translateTo: translateTo,
+      );
+
     return WillPopScope(
       onWillPop: () async {
         return showDialog(
@@ -67,30 +60,111 @@ class _HomeScreenState extends State<HomeScreen> {
           backgroundColor: Theme.of(context).accentColor,
           resizeToAvoidBottomInset: false,
           body: Container(
-            padding: EdgeInsets.all(12),
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
+            padding: EdgeInsets.all(18),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                slider,
+                SizedBox(height: 6.getHeight(context)),
+                Stack(
+                  children: [
+                    Icon(Icons.menu),
+                    Center(
+                      child: Text(
+                        "Assisted Interpretation",
+                        style: Theme.of(context).textTheme.headline2,
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 24.getHeight(context)),
                 Expanded(
-                  child: PageView(
-                    onPageChanged: (int page) {
-                      if (toPage != null) if (toPage != page) {
-                        page = null;
-                      } else {
-                        toPage = null;
-                      }
-
-                      if (page != null) {
-                        slider.currentIndex.value = page;
-                        setState(() {
-                          currentPage = page;
-                        });
-                      }
-                    },
-                    controller: _pageController,
-                    children: screens.map<Widget>((e) => e).toList(),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Text(
+                              translateFrom,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyText1
+                                  .copyWith(fontSize: 18),
+                            ),
+                            Container(
+                              padding: EdgeInsets.symmetric(
+                                  vertical: 1, horizontal: 20),
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  colors: [
+                                    Theme.of(context).primaryColor,
+                                    Color(0xff43bfb2).withOpacity(0.85),
+                                  ],
+                                  begin: Alignment.centerRight,
+                                  end: Alignment.centerLeft,
+                                  stops: [0.35, 0.95],
+                                ),
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                              child: Icon(
+                                Icons.swap_horiz,
+                                size: 26,
+                                color: Theme.of(context)
+                                    .accentColor
+                                    .withOpacity(0.9),
+                              ),
+                            ),
+                            DropdownButton<String>(
+                              value: translateTo,
+                              underline: Container(),
+                              elevation: 1,
+                              dropdownColor: Theme.of(context).accentColor,
+                              icon: Padding(
+                                padding: EdgeInsets.only(left: 4),
+                                child: Icon(
+                                  Icons.keyboard_arrow_down,
+                                  size: 20,
+                                  color: Colors.grey[800],
+                                ),
+                              ),
+                              onChanged: (String option) {
+                                if (translateTo != option)
+                                  setState(() => translateTo = option);
+                              },
+                              items: translateToOptions
+                                  .map<DropdownMenuItem<String>>(
+                                    (String option) => DropdownMenuItem(
+                                        child: Text(
+                                          option,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyText1
+                                              .copyWith(fontSize: 18),
+                                        ),
+                                        value: option),
+                                  )
+                                  .toList(),
+                            ),
+                          ],
+                        ),
+                        Divider(height: 48.getHeight(context)),
+                        translationScreen,
+                      ],
+                    ),
                   ),
-                )
+                ),
+                Center(
+                  child: ModeSelectionWheel(
+                    onChangeMode: (String _mode) =>
+                        setState(() => mode = _mode),
+                    onTapSelected: (String mode) =>
+                        translationScreen.onTapSelected(mode),
+                  ),
+                ),
               ],
             ),
           ),

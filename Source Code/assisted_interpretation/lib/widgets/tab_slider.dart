@@ -1,3 +1,4 @@
+import 'package:assisted_interpretation/config/extensions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -47,7 +48,7 @@ class _TabSliderState extends State<TabSlider> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
-              height: 35,
+              height: 35.getHeight(context),
               width: sliderWidth,
               decoration: BoxDecoration(
                 color: Theme.of(context).primaryColor,
@@ -95,7 +96,7 @@ class _TabSliderState extends State<TabSlider> {
                         (sliderWidth / widget.tabNames.length),
                     child: Container(
                       width: sliderWidth / widget.tabNames.length,
-                      height: 35,
+                      height: 35.getHeight(context),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
                         color: Theme.of(context).highlightColor,

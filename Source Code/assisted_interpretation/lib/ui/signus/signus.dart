@@ -1,5 +1,5 @@
+import 'package:assisted_interpretation/api/response.dart';
 import 'package:assisted_interpretation/api/signus.dart';
-import 'package:assisted_interpretation/config/constant.dart';
 import 'package:assisted_interpretation/config/extensions.dart';
 import 'package:assisted_interpretation/ui/signus/components/speech_dialog.dart';
 import 'package:assisted_interpretation/widgets/alert_button.dart';
@@ -40,14 +40,14 @@ class _SignUsScreenState extends State<SignUsScreen> {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         SizedBox(
-          height: getHeight(context, 100),
+          height: 100.getHeight(context),
         ),
         Text(
           "Convert To Sign",
           style: Theme.of(context).textTheme.headline6,
         ),
         SizedBox(
-          height: getHeight(context, 24),
+          height: 24.getHeight(context),
         ),
         TextButton(
           onPressed: () {
@@ -88,7 +88,7 @@ class _SignUsScreenState extends State<SignUsScreen> {
                           context,
                           MaterialPageRoute(
                             builder: (BuildContext context) => SignScreen(
-                              url: response.url,
+                              url: response.response["url"],
                               text: sentence.trim().capitalize(),
                             ),
                           ),

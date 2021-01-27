@@ -2,29 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
-enum Status { Ok, Error }
-
-class Response {
-  Map _response;
-  Status _status;
-
-  Map get response => _response;
-
-  Status get status => _status;
-
-  set response(Map newResponse) {
-    this._response = newResponse;
-  }
-
-  set status(Status newStatus) {
-    this._status = newStatus;
-  }
-
-  Response({Map response, Status status}) {
-    this._response = response;
-    this._status = status;
-  }
-}
+import "response.dart";
 
 class BrAidApi {
   static Future<Response> getCells(String sentence) async {

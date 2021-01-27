@@ -1,5 +1,6 @@
+import 'package:assisted_interpretation/api/response.dart';
 import 'package:assisted_interpretation/api/signus.dart';
-import 'package:assisted_interpretation/config/constant.dart';
+import 'package:assisted_interpretation/config/extensions.dart';
 import 'package:assisted_interpretation/ui/signus/display.dart';
 import 'package:assisted_interpretation/widgets/alert_button.dart';
 import 'package:assisted_interpretation/widgets/rounded_alert_dialog.dart';
@@ -61,7 +62,7 @@ class _SpeechDialogState extends State<SpeechDialog> {
                       style: Theme.of(context).textTheme.bodyText1,
                     ),
                   ),
-                  SizedBox(height: getHeight(context, 10)),
+                  SizedBox(height: 10.getHeight(context)),
                   AlertButton(
                     onPressed: widget.available && !listening
                         ? () {
@@ -93,7 +94,7 @@ class _SpeechDialogState extends State<SpeechDialog> {
                                             MaterialPageRoute(
                                               builder: (BuildContext context) =>
                                                   SignScreen(
-                                                url: response.url,
+                                                url: response.response["url"],
                                                 text: sentence,
                                               ),
                                             ),
