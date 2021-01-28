@@ -16,9 +16,10 @@ jobs:
     - uses: subosito/flutter-action@v1
       with:
         channel: 'beta'
+    - run: cd "Source Code/assisted_interpretation"
     - run: flutter pub get
     - run: flutter build apk
     - uses: actions/upload-artifact@v1
       with:
         name: Assissted-Interpratation.apk
-        path: build/app/outputs/apk/release/app-release.apk
+        path: "Source Code/assisted_interpretation/build/app/outputs/apk/release/app-release.apk"
