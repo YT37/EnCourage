@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 
 import 'display/braille.dart';
 
+bool doClear = false;
+
 // ignore: must_be_immutable
 class TextTranslation extends StatefulWidget {
   final String translateFrom;
@@ -14,18 +16,12 @@ class TextTranslation extends StatefulWidget {
 
   TextTranslation({this.translateFrom, this.translateTo});
 
-  _TextTranslationState state;
-
   void onTapSelected(String mode) {}
 
-  // TODO FIXME: The method 'clear' was called on null.
-  void clearResponse() => state.clear();
+  void clearResponse() => doClear = true;
 
   @override
-  _TextTranslationState createState() {
-    state = _TextTranslationState();
-    return state;
-  }
+  _TextTranslationState createState() => _TextTranslationState();
 }
 
 class _TextTranslationState extends State<TextTranslation> {
@@ -34,12 +30,10 @@ class _TextTranslationState extends State<TextTranslation> {
   Response response;
   bool translating = false;
 
-  void clear() {
-    setState(() {
-      _controller.clear();
-      response = null;
-    });
-  }
+  void clear() => setState(() {
+        _controller.clear();
+        response = null;
+      });
 
   @override
   void dispose() {
@@ -49,6 +43,13 @@ class _TextTranslationState extends State<TextTranslation> {
 
   @override
   Widget build(BuildContext context) {
+    if (doClear) {
+      clear();
+      doClear = false;
+    }
+
+    if (response != null) print(response.response);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -117,6 +118,7 @@ class _TextTranslationState extends State<TextTranslation> {
         ),
         Divider(
           height: 18.getHeight(context),
+          thickness: 0.6,
         ),
         SizedBox(
           height: 15.getHeight(context),
@@ -129,15 +131,11 @@ class _TextTranslationState extends State<TextTranslation> {
           height: 12.getHeight(context),
         ),
         Container(
-          height: MediaQuery.of(context).size.height / 3.5,
+          height: 270.getHeight(context),
           child: response != null
               ? widget.translateTo == "Braille"
-                  ? BrailleDisplay(
-                      BrailleData.fromMap(response.response),
-                    )
-                  : SignDisplay(
-                      SignData.fromMap(response.response),
-                    )
+                  ? BrailleDisplay(BrailleData.fromMap(response.response))
+                  : SignDisplay(SignData.fromMap(response.response))
               : Text(
                   translating
                       ? "Translating..."

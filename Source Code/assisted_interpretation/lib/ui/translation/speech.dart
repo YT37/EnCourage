@@ -8,6 +8,9 @@ import 'package:speech_recognition/speech_recognition.dart';
 
 import 'display/braille.dart';
 
+bool doClear = false;
+bool doListen = false;
+
 // ignore: must_be_immutable
 class SpeechTranslation extends StatefulWidget {
   final String translateFrom;
@@ -15,19 +18,12 @@ class SpeechTranslation extends StatefulWidget {
 
   SpeechTranslation({this.translateFrom, this.translateTo});
 
-  _SpeechTranslationState state;
+  void onTapSelected(String mode) => doListen = true;
 
-  // TODO FIXME: The method 'listen' was called on null.
-  void onTapSelected(String mode) => state.listen();
-
-  // TODO FIXME: The method 'clear' was called on null.
-  void clearResponse() => state.clear();
+  void clearResponse() => doClear = true;
 
   @override
-  _SpeechTranslationState createState() {
-    state = _SpeechTranslationState();
-    return state;
-  }
+  _SpeechTranslationState createState() => _SpeechTranslationState();
 }
 
 class _SpeechTranslationState extends State<SpeechTranslation> {
@@ -101,6 +97,16 @@ class _SpeechTranslationState extends State<SpeechTranslation> {
 
   @override
   Widget build(BuildContext context) {
+    if (doClear) {
+      clear();
+      doClear = false;
+    }
+
+    if (doListen) {
+      listen();
+      doListen = false;
+    }
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -130,7 +136,7 @@ class _SpeechTranslationState extends State<SpeechTranslation> {
           child: Text(
             recognized != ""
                 ? recognized
-                : "Click the Mic icon below to Start Listening",
+                : "Click the Mic Icon below to start listening",
             style: Theme.of(context).textTheme.headline3.copyWith(
                   fontWeight: FontWeight.w500,
                   fontSize: 22.getHeight(context),

@@ -33,11 +33,13 @@ class _SignDisplayState extends State<SignDisplay> {
   void initState() {
     super.initState();
 
-    listener = () => setState(() {});
     if (widget.data.url != "") {
+      print("${widget.data.url}.webm");
       if (controller == null) {
         controller = VideoPlayerController.network("${widget.data.url}.webm")
-          ..addListener(listener)
+          // ..addListener(() {
+          //   if (mounted) setState(() {});
+          // })
           ..setLooping(true)
           ..initialize()
           ..play();
@@ -66,8 +68,10 @@ class _SignDisplayState extends State<SignDisplay> {
 
   @override
   Widget build(BuildContext context) {
-    return AspectRatio(
-      aspectRatio: 16 / 9,
+    print(widget.data.url);
+
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 8.0),
       child: controller != null
           ? VideoPlayer(controller)
           : Text(

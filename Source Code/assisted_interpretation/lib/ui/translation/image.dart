@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:assisted_interpretation/api/braid.dart';
 import 'package:assisted_interpretation/api/response.dart';
 import 'package:assisted_interpretation/api/signus.dart';
@@ -8,6 +10,9 @@ import 'package:image_picker/image_picker.dart';
 
 import 'display/braille.dart';
 
+bool doClear = false;
+bool doRecognize = false;
+
 // ignore: must_be_immutable
 class ImageTranslation extends StatefulWidget {
   final String translateFrom;
@@ -15,19 +20,12 @@ class ImageTranslation extends StatefulWidget {
 
   ImageTranslation({this.translateFrom, this.translateTo});
 
-  _ImageTranslationState state;
-
   @override
-  _ImageTranslationState createState() {
-    state = _ImageTranslationState();
-    return state;
-  }
+  _ImageTranslationState createState() => _ImageTranslationState();
 
-  // TODO FIXME: The method 'recognize' was called on null.
-  void onTapSelected(String mode) => state.recognize();
+  void onTapSelected(String mode) => doRecognize = true;
 
-  /// TODO FIXME: The method 'clear' was called on null.
-  void clearResponse() => state.clear();
+  void clearResponse() => doClear = true;
 }
 
 class _ImageTranslationState extends State<ImageTranslation> {
@@ -52,29 +50,32 @@ class _ImageTranslationState extends State<ImageTranslation> {
       PickedFile image = value;
 
       if (image != null) {
-        String text = "How are you doing";
+        setState(() => translating = true);
 
-        setState(() {
-          response = null;
-          translating = true;
+        Timer(Duration(seconds: 2), () {
+          String text = "How are you doing";
 
-          recognized = text;
+          setState(() {
+            response = null;
 
-          widget.translateTo == "Braille"
-              ? BrAidApi.getCellsWithRepr(recognized)
-                  .then(
-                    (value) => setState(() => response = value),
-                  )
-                  .whenComplete(
-                    () => setState(() => translating = false),
-                  )
-              : SignUsApi.getSigns(recognized)
-                  .then(
-                    (value) => setState(() => response = value),
-                  )
-                  .whenComplete(
-                    () => setState(() => translating = false),
-                  );
+            recognized = text;
+
+            widget.translateTo == "Braille"
+                ? BrAidApi.getCellsWithRepr(recognized)
+                    .then(
+                      (value) => setState(() => response = value),
+                    )
+                    .whenComplete(
+                      () => setState(() => translating = false),
+                    )
+                : SignUsApi.getSigns(recognized)
+                    .then(
+                      (value) => setState(() => response = value),
+                    )
+                    .whenComplete(
+                      () => setState(() => translating = false),
+                    );
+          });
         });
       }
     });
@@ -82,6 +83,16 @@ class _ImageTranslationState extends State<ImageTranslation> {
 
   @override
   Widget build(BuildContext context) {
+    if (doClear) {
+      clear();
+      doClear = false;
+    }
+
+    if (doRecognize) {
+      recognize();
+      doRecognize = false;
+    }
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -111,7 +122,9 @@ class _ImageTranslationState extends State<ImageTranslation> {
           child: Text(
             recognized != ""
                 ? recognized
-                : "Click the Camera icon below to Take a Picture",
+                : translating
+                    ? "Recognizing Text..."
+                    : "Click the Camera Icon below to take a picture",
             style: Theme.of(context).textTheme.headline3.copyWith(
                   fontWeight: FontWeight.w500,
                   fontSize: 22.getHeight(context),

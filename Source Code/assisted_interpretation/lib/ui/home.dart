@@ -138,13 +138,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                               ),
                               onChanged: (String option) {
-                                if (translateTo != option)
+                                if (translateTo != option) {
+                                  translationScreen.clearResponse();
                                   setState(() {
-                                    // TODO FIXME: The method 'clear' was called on null.
-                                    // translationScreen.clearResponse();
-
                                     translateTo = option;
                                   });
+                                }
                               },
                               items: translateToOptions
                                   .map<DropdownMenuItem<String>>(
@@ -177,7 +176,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     onChangeMode: (String _mode) =>
                         setState(() => mode = _mode),
                     onTapSelected: (String mode) =>
-                        translationScreen.onTapSelected(mode),
+                        setState(() => translationScreen.onTapSelected(mode)),
                   ),
                 ),
               ],
