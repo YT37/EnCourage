@@ -43,11 +43,15 @@ class AppTheme {
       ),
       inputDecorationTheme: InputDecorationTheme(
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(8)),
+          borderRadius: BorderRadius.all(
+            Radius.circular(8),
+          ),
           borderSide: BorderSide(color: Colors.grey),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(8)),
+          borderRadius: BorderRadius.all(
+            Radius.circular(8),
+          ),
           borderSide: BorderSide(color: primaryColor, width: 1.5),
         ),
       ),

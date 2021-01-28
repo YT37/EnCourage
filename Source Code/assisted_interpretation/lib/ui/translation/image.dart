@@ -4,47 +4,80 @@ import 'package:assisted_interpretation/api/signus.dart';
 import 'package:assisted_interpretation/config/extensions.dart';
 import 'package:assisted_interpretation/ui/translation/display/sign.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 import 'display/braille.dart';
 
 // ignore: must_be_immutable
-class TextTranslation extends StatefulWidget {
+class ImageTranslation extends StatefulWidget {
   final String translateFrom;
   final String translateTo;
 
-  TextTranslation({this.translateFrom, this.translateTo});
+  ImageTranslation({this.translateFrom, this.translateTo});
 
-  _TextTranslationState state;
-
-  void onTapSelected(String mode) {}
-
-  // TODO FIXME: The method 'clear' was called on null.
-  void clearResponse() => state.clear();
+  _ImageTranslationState state;
 
   @override
-  _TextTranslationState createState() {
-    state = _TextTranslationState();
+  _ImageTranslationState createState() {
+    state = _ImageTranslationState();
     return state;
   }
+
+  // TODO FIXME: The method 'recognize' was called on null.
+  void onTapSelected(String mode) => state.recognize();
+
+  /// TODO FIXME: The method 'clear' was called on null.
+  void clearResponse() => state.clear();
 }
 
-class _TextTranslationState extends State<TextTranslation> {
-  final TextEditingController _controller = TextEditingController();
-
+class _ImageTranslationState extends State<ImageTranslation> {
   Response response;
   bool translating = false;
 
+  String recognized = "";
+
   void clear() {
     setState(() {
-      _controller.clear();
+      recognized = "";
       response = null;
     });
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-    _controller.dispose();
+  void recognize() {
+    clear();
+
+    final ImagePicker picker = ImagePicker();
+
+    picker.getImage(source: ImageSource.camera).then((value) {
+      PickedFile image = value;
+
+      if (image != null) {
+        String text = "How are you doing";
+
+        setState(() {
+          response = null;
+          translating = true;
+
+          recognized = text;
+
+          widget.translateTo == "Braille"
+              ? BrAidApi.getCellsWithRepr(recognized)
+                  .then(
+                    (value) => setState(() => response = value),
+                  )
+                  .whenComplete(
+                    () => setState(() => translating = false),
+                  )
+              : SignUsApi.getSigns(recognized)
+                  .then(
+                    (value) => setState(() => response = value),
+                  )
+                  .whenComplete(
+                    () => setState(() => translating = false),
+                  );
+        });
+      }
+    });
   }
 
   @override
@@ -59,7 +92,7 @@ class _TextTranslationState extends State<TextTranslation> {
               widget.translateFrom,
               style: TextStyle(color: Colors.grey[400]),
             ),
-            if (_controller.text != "")
+            if (recognized != "")
               GestureDetector(
                 onTap: () => clear(),
                 child: Icon(
@@ -70,56 +103,23 @@ class _TextTranslationState extends State<TextTranslation> {
               ),
           ],
         ),
-        TextField(
-          controller: _controller,
-          style: Theme.of(context)
-              .textTheme
-              .headline2
-              .copyWith(fontWeight: FontWeight.w500),
-          cursorColor: Colors.grey[400],
-          cursorHeight: 30.getHeight(context),
-          maxLines: 3,
-          keyboardType: TextInputType.text,
-          decoration: InputDecoration(
-            hintText: "Type the text to translate",
-            hintStyle: Theme.of(context).textTheme.headline3.copyWith(
+        SizedBox(
+          height: 12.getHeight(context),
+        ),
+        Container(
+          height: 75.getHeight(context),
+          child: Text(
+            recognized != ""
+                ? recognized
+                : "Click the Camera icon below to Take a Picture",
+            style: Theme.of(context).textTheme.headline3.copyWith(
                   fontWeight: FontWeight.w500,
                   fontSize: 22.getHeight(context),
                 ),
-            enabledBorder: InputBorder.none,
-            focusedBorder: InputBorder.none,
           ),
-          onSubmitted: (String text) {
-            response = null;
-
-            if (text != "") {
-              translating = true;
-
-              widget.translateTo == "Braille"
-                  ? BrAidApi.getCellsWithRepr(_controller.text)
-                      .then(
-                        (value) => setState(() => response = value),
-                      )
-                      .whenComplete(
-                        () => setState(() => translating = false),
-                      )
-                  : SignUsApi.getSigns(_controller.text)
-                      .then(
-                        (value) => setState(() => response = value),
-                      )
-                      .whenComplete(
-                        () => setState(() => translating = false),
-                      );
-            }
-
-            setState(() {});
-          },
         ),
         Divider(
-          height: 18.getHeight(context),
-        ),
-        SizedBox(
-          height: 15.getHeight(context),
+          height: 48.getHeight(context),
         ),
         Text(
           widget.translateTo,

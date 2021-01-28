@@ -10,11 +10,12 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+
   responsive_framework: ^0.0.14
+  speech_recognition: ^0.3.0+1
   image_picker: ^0.6.7+21
   video_player: ^1.0.1
   http: ^0.12.2
-  speech_recognition: ^0.3.0+1
 
 dev_dependencies:
   flutter_test:

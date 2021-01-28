@@ -1,3 +1,4 @@
+import 'package:assisted_interpretation/config/extensions.dart';
 import 'package:flutter/material.dart';
 
 class AlertButton extends StatelessWidget {
@@ -20,7 +21,7 @@ class AlertButton extends StatelessWidget {
       child: Text(
         title,
         style: TextStyle(
-          fontSize: 16,
+          fontSize: 16.getHeight(context),
           color: Theme.of(context).accentColor,
           fontWeight: FontWeight.bold,
         ),

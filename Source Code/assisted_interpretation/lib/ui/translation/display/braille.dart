@@ -31,8 +31,8 @@ class BrailleDisplay extends StatelessWidget {
               2,
               (int y) => Container(
                 margin: const EdgeInsets.all(2),
-                height: 12.getHeight(context),
-                width: 12.getHeight(context),
+                height: 14.getHeight(context),
+                width: 14.getHeight(context),
                 decoration: BoxDecoration(
                   color: cell[2 * x + y] == 1 ? Colors.black : Colors.white,
                   border: Border.all(color: Colors.black),
@@ -42,7 +42,9 @@ class BrailleDisplay extends StatelessWidget {
             ),
           ),
         ),
-        SizedBox(height: 3.getHeight(context)),
+        SizedBox(
+          height: 3.getHeight(context),
+        ),
         Text(
           repr,
           style: Theme.of(context).textTheme.caption,

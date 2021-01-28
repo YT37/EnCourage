@@ -43,7 +43,7 @@ class _TabSliderState extends State<TabSlider> {
     return ValueListenableBuilder<int>(
       valueListenable: widget.currentIndex,
       builder: (BuildContext context, value, child) => Container(
-        margin: const EdgeInsets.only(top: 12, bottom: 24),
+        margin: EdgeInsets.only(top: 12, bottom: 24),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -90,7 +90,7 @@ class _TabSliderState extends State<TabSlider> {
                     ),
                   ),
                   AnimatedPositioned(
-                    duration: const Duration(milliseconds: 300),
+                    duration: Duration(milliseconds: 300),
                     curve: Curves.easeInOut,
                     left: widget.currentIndex.value *
                         (sliderWidth / widget.tabNames.length),

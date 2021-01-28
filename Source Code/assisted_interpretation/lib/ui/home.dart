@@ -1,5 +1,6 @@
 import 'package:assisted_interpretation/config/extensions.dart';
 import 'package:assisted_interpretation/ui/mode_selection.dart';
+import 'package:assisted_interpretation/ui/translation/image.dart';
 import 'package:assisted_interpretation/ui/translation/speech.dart';
 import 'package:assisted_interpretation/ui/translation/text.dart';
 import 'package:assisted_interpretation/widgets/alert_button.dart';
@@ -14,7 +15,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   // final List<String> translateFromOptions = ["English"];
-  final List<String> translateToOptions = ["Braille", "ASL"];
+  final List<String> translateToOptions = ["Braille", "BSL"];
 
   String translateFrom = "English";
   String translateTo = "Braille";
@@ -32,6 +33,11 @@ class _HomeScreenState extends State<HomeScreen> {
       );
     else if (mode == "speech")
       translationScreen = SpeechTranslation(
+        translateFrom: translateFrom,
+        translateTo: translateTo,
+      );
+    else if (mode == "image")
+      translationScreen = ImageTranslation(
         translateFrom: translateFrom,
         translateTo: translateTo,
       );
@@ -59,6 +65,15 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Scaffold(
           backgroundColor: Theme.of(context).accentColor,
           resizeToAvoidBottomInset: false,
+          appBar: AppBar(
+            backgroundColor: Theme.of(context).accentColor,
+            centerTitle: true,
+            elevation: 0,
+            title: Text(
+              "Assisted Interpretation",
+              style: Theme.of(context).textTheme.headline2,
+            ),
+          ),
           body: Container(
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
@@ -66,22 +81,9 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                SizedBox(height: 6.getHeight(context)),
-                Stack(
-                  children: [
-                    Icon(Icons.menu),
-                    Center(
-                      child: Text(
-                        "Assisted Interpretation",
-                        style: Theme.of(context).textTheme.headline2,
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 24.getHeight(context)),
                 Expanded(
                   child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: EdgeInsets.all(8),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -93,12 +95,15 @@ class _HomeScreenState extends State<HomeScreen> {
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyText1
-                                  .copyWith(fontSize: 18.getHeight(context)),
+                                  .copyWith(
+                                    fontSize: 18.getHeight(context),
+                                  ),
                             ),
                             Container(
                               padding: EdgeInsets.symmetric(
-                                  vertical: 1.getHeight(context),
-                                  horizontal: 20.getHeight(context)),
+                                vertical: 1.getHeight(context),
+                                horizontal: 20.getHeight(context),
+                              ),
                               decoration: BoxDecoration(
                                 gradient: LinearGradient(
                                   colors: [
@@ -134,7 +139,12 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                               onChanged: (String option) {
                                 if (translateTo != option)
-                                  setState(() => translateTo = option);
+                                  setState(() {
+                                    // TODO FIXME: The method 'clear' was called on null.
+                                    // translationScreen.clearResponse();
+
+                                    translateTo = option;
+                                  });
                               },
                               items: translateToOptions
                                   .map<DropdownMenuItem<String>>(
@@ -145,8 +155,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                               .textTheme
                                               .bodyText1
                                               .copyWith(
-                                                  fontSize:
-                                                      18.getHeight(context)),
+                                                fontSize: 18.getHeight(context),
+                                              ),
                                         ),
                                         value: option),
                                   )
@@ -154,7 +164,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ],
                         ),
-                        Divider(height: 40.getHeight(context)),
+                        Divider(
+                          height: 40.getHeight(context),
+                        ),
                         translationScreen,
                       ],
                     ),
