@@ -1,3 +1,6 @@
 [submodule "Source Code/server"]
 	path = Source Code/server
 	url = https://github.com/Solvrz/Assisted-Interpretation-Server
+[submodule "Source Code/assisted_interpretation_website"]
+	path = Source Code/assisted_interpretation_website
+	url = https://github.com/Solvrz/Assisted-Interpretation-Website

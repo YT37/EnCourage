@@ -44,6 +44,8 @@ key.properties
 
 # Web
 Source Code/assisted_interpretation/lib/generated_plugin_registrant.dart
+Source Code/assisted_interpretation_website/lib/generated_plugin_registrant.dart
+
 
 # Symbolication
 app.*.symbols
