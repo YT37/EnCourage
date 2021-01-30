@@ -7,7 +7,7 @@ on:
 
 defaults:
   run:
-    working-directory: "./Source Code/assisted_interpretation/"
+    working-directory: "./Source Code/assisted_interpretation/build/app/outputs/apk/release/"
 
 jobs:
   build:
