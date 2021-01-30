@@ -8,6 +8,7 @@ on:
 defaults:
   run:
     working-directory: "./Source Code/assisted_interpretation/"
+    shell: bash
 
 jobs:
   build:
@@ -23,6 +24,8 @@ jobs:
 #         channel: 'beta'
 #     - run: flutter pub get 
 #     - run: flutter build apk
+    - run: cd "Source Code"
+    - run: pwd
     - run: ls
 
     - uses: actions/upload-artifact@v1
