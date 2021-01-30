@@ -1,1 +1,5 @@
 # Assisted-Interpretation-Server
+
+A server for Assisted Interpretation.
+
+Link: https://dashboard.heroku.com/apps/assisted-interpretation
