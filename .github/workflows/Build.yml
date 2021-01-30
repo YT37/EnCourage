@@ -5,9 +5,9 @@ on:
     branches:
     - master
 
-# defaults:
-#   run:
-#     working-directory: "./Source Code/assisted_interpretation/"
+defaults:
+  run:
+    working-directory: "./Source Code/assisted_interpretation/"
 
 jobs:
   build:
@@ -23,11 +23,9 @@ jobs:
 #         channel: 'beta'
 #     - run: flutter pub get 
 #     - run: flutter build apk
-    - run: cd "Source Code"
-    - run: pwd
     - run: ls
 
     - uses: actions/upload-artifact@v1
       with:
         name: Assissted-Interpratation.apk
-        path: "./Source Code/assisted_interpretation/build/app/outputs/apk/release/app-release.apk"
+        path: "Source Code/assisted_interpretation/build/app/outputs/apk/release/app-release.apk"
