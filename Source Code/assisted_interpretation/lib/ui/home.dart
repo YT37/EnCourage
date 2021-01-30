@@ -175,8 +175,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: ModeSelectionWheel(
                     onChangeMode: (String _mode) =>
                         setState(() => mode = _mode),
-                    onTapSelected: (String mode) =>
-                        setState(() => translationScreen.onTapSelected(mode)),
+                    onTapSelected: (String mode) => setState(
+                      () => translationScreen.onTapSelected(mode),
+                    ),
                   ),
                 ),
               ],

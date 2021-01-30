@@ -134,8 +134,12 @@ class _TextTranslationState extends State<TextTranslation> {
           height: 270.getHeight(context),
           child: response != null
               ? widget.translateTo == "Braille"
-                  ? BrailleDisplay(BrailleData.fromMap(response.response))
-                  : SignDisplay(SignData.fromMap(response.response))
+                  ? BrailleDisplay(
+                      BrailleData.fromMap(response.response),
+                    )
+                  : SignDisplay(
+                      SignData.fromMap(response.response),
+                    )
               : Text(
                   translating
                       ? "Translating..."

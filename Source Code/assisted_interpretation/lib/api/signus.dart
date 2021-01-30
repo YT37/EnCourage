@@ -12,7 +12,9 @@ class SignUsApi {
       http.Response token = await http
           .get(
               "https://api.txttosl.com/api/v1/translate?hoster=self&lang=BSL&text=${sentence.toLowerCase().trim()}&redirect=false")
-          .timeout(Duration(seconds: 10));
+          .timeout(
+            Duration(seconds: 10),
+          );
 
       print("Fetched Results! Status Code: ${token.statusCode}");
 

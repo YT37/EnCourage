@@ -30,7 +30,7 @@ class BrailleDisplay extends StatelessWidget {
             children: List.generate(
               2,
               (int y) => Container(
-                margin: const EdgeInsets.all(2),
+                margin: EdgeInsets.all(2),
                 height: 14.getHeight(context),
                 width: 14.getHeight(context),
                 decoration: BoxDecoration(
@@ -58,7 +58,7 @@ class BrailleDisplay extends StatelessWidget {
     return Scrollbar(
       child: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.only(right: 14.0),
+          padding: EdgeInsets.only(right: 14),
           child: Wrap(
             spacing: 12.getHeight(context),
             runSpacing: 12.getHeight(context),

@@ -87,7 +87,7 @@ class _SpeechTranslationState extends State<SpeechTranslation> {
       }),
     );
     speech.setRecognitionCompleteHandler(
-      () => setState(() => listening = false),
+      (_) => setState(() => listening = false),
     );
 
     speech.activate().then(
