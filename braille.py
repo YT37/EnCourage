@@ -60,10 +60,9 @@ class Word:
                     if char.isupper():
                         self.cells.append(Cell("Capital", [0, 0, 0, 0, 0, 1]))
 
-                        if len(self.word) - 1 > i:
-                            if self.word[i + 1].isupper():
-                                self.cells.append(Cell("Capital", [0, 0, 0, 0, 0, 1]))
-                                caps = True
+                        if self.word.isupper():
+                            self.cells.append(Cell("Capital", [0, 0, 0, 0, 0, 1]))
+                            caps = True
 
                     else:
                         self.cells.append(Cell("Letter Follows", [0, 0, 0, 0, 1, 1]))
@@ -237,7 +236,7 @@ class Sentence:
                 out += str(Cell("Space", [0, 0, 0, 0, 0, 0]))
                 out += "Space\n\n"
 
-        return out
+        print("".join(out))
 
     def toSignal(self):
         out = []
