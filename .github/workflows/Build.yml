@@ -23,7 +23,7 @@ jobs:
 #         channel: 'beta'
 #     - run: flutter pub get 
 #     - run: flutter build apk
-    - run: cd "./Source Code/assisted_interpretation/" && ls
+    - run: cd "Source Code/assisted_interpretation/" && ls
 
     - uses: actions/upload-artifact@v1
       with:
