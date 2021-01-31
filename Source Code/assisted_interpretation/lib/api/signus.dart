@@ -1,6 +1,6 @@
 import 'package:http/http.dart' as http;
 
-import 'response.dart';
+import './response.dart';
 
 class SignUsApi {
   static Future<Response> getSigns(String sentence) async {

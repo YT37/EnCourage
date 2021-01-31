@@ -27,7 +27,7 @@ class SignDisplay extends StatefulWidget {
 
 class _SignDisplayState extends State<SignDisplay> {
   VideoPlayerController controller;
-  VoidCallback listener;
+  dynamic listener;
 
   @override
   void initState() {

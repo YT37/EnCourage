@@ -45,7 +45,7 @@ class AssisstedInterpratation extends StatelessWidget {
           background: Container(color: Theme.of(context).accentColor),
         ),
       ),
-      title: 'assisted_interpretation',
+      title: "assisted_interpretation",
       initialRoute: "/",
       routes: {
         "/": (BuildContext context) => SplashScreen(),
