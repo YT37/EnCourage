@@ -48,8 +48,6 @@ class _TextTranslationState extends State<TextTranslation> {
       doClear = false;
     }
 
-    if (response != null) print(response.response);
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

@@ -11,8 +11,6 @@ class BrAidApi {
     }, status: Status.Ok);
 
     try {
-      print("Fetching Results...");
-
       http.Response token = await http.post(
         "https://assisted-interpretation.herokuapp.com/braid/cells",
         headers: <String, String>{
@@ -22,8 +20,6 @@ class BrAidApi {
           <String, dynamic>{"sentence": sentence.trim()},
         ),
       );
-
-      print("Fetched Results! Status Code: ${token.statusCode}");
 
       if (token.statusCode == 200)
         response.response = {"cells": jsonDecode(token.body)["cells"]};
@@ -47,8 +43,6 @@ class BrAidApi {
     );
 
     try {
-      print("Fetching Results...");
-
       http.Response token = await http.post(
         "https://assisted-interpretation.herokuapp.com/braid/cells-repr",
         headers: <String, String>{
@@ -58,8 +52,6 @@ class BrAidApi {
           <String, dynamic>{"sentence": sentence.trim()},
         ),
       );
-
-      print("Fetched Results! Status Code: ${token.statusCode}");
 
       if (token.statusCode == 200) {
         Map data = jsonDecode(token.body);

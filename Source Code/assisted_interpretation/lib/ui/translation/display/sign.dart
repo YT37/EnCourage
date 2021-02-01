@@ -35,7 +35,6 @@ class _SignDisplayState extends State<SignDisplay> {
     if (mounted) listener = () => setState(() {});
 
     if (widget.data.url != "") {
-      print("${widget.data.url}.webm");
       if (controller == null) {
         controller = VideoPlayerController.network("${widget.data.url}.webm")
           ..addListener(listener)
@@ -67,8 +66,6 @@ class _SignDisplayState extends State<SignDisplay> {
 
   @override
   Widget build(BuildContext context) {
-    print(widget.data.url);
-
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 8),
       child: controller != null
