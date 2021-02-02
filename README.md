@@ -2,4 +2,4 @@
 
 A server for Assisted Interpretation.
 
-Link: https://dashboard.heroku.com/apps/assisted-interpretation
+Link: https://dashboard.heroku.com/apps/encourage-server
