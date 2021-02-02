@@ -44,10 +44,7 @@ class EnCourage extends StatelessWidget {
       builder: (BuildContext context, Widget widget) => Theme(
         data: AppTheme.light(context),
         child: ResponsiveWrapper.builder(
-          BouncingScrollWrapper.builder(
-            context,
-            widget,
-          ),
+          BouncingScrollWrapper.builder(context, widget),
           maxWidth: 1200,
           minWidth: 360,
           defaultScale: true,
