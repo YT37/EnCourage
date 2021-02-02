@@ -65,15 +65,6 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Scaffold(
           backgroundColor: Theme.of(context).accentColor,
           resizeToAvoidBottomInset: false,
-          appBar: AppBar(
-            backgroundColor: Theme.of(context).accentColor,
-            centerTitle: true,
-            elevation: 0,
-            title: Text(
-              "EnCourage",
-              style: Theme.of(context).textTheme.headline2,
-            ),
-          ),
           body: Container(
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,

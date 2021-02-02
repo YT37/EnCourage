@@ -59,9 +59,7 @@ class _SplashScreenState extends State<SplashScreen>
         Container(
           width: double.infinity,
           height: double.infinity,
-          color: pow(holeSize.value / 2, 2) > 0.9
-              ? Theme.of(context).accentColor
-              : Theme.of(context).primaryColor,
+          color: Theme.of(context).accentColor,
         ),
         if (holeSize.value < 1.5)
           Center(
@@ -71,12 +69,10 @@ class _SplashScreenState extends State<SplashScreen>
                 type: MaterialType.transparency,
                 child: Container(
                   child: Center(
-                    child: Text(
-                      "AI",
-                      style: TextStyle(
-                        fontSize: 95,
-                        color: Theme.of(context).accentColor,
-                      ),
+                    child: Image.asset(
+                      "assets/images/logo.png",
+                      height: 200,
+                      width: 200,
                     ),
                   ),
                 ),
@@ -94,7 +90,7 @@ class _SplashScreenState extends State<SplashScreen>
             child: CustomPaint(
               painter: AnimatedCircle(
                 circleSize: holeSize.value * size.height,
-                accentColor: Theme.of(context).accentColor,
+                accentColor: Theme.of(context).primaryColor,
               ),
             ),
           ),
