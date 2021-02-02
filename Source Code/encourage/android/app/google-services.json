@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "390604206752",
+    "project_id": "encourage-37",
+    "storage_bucket": "encourage-37.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:390604206752:android:749b7ee4cde26f31f00fc5",
+        "android_client_info": {
+          "package_name": "com.sovrz.encourage"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "390604206752-rtergpqmimn3mild5jfiq09sfpcsmg8j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAy7ivSQKkeneYZ9VV9-9MnjkV3Ip9TJW4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "390604206752-rtergpqmimn3mild5jfiq09sfpcsmg8j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

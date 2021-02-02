@@ -1,4 +1,4 @@
-package com.solvrz.encourage.encourage
+package com.solvrz.encourage
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -34,7 +34,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.solvrz.encourage.encourage"
+        applicationId "com.solvrz.encourage"
         minSdkVersion 21
         targetSdkVersion 28
         versionCode flutterVersionCode.toInteger()
