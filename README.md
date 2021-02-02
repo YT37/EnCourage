@@ -1,4 +1,4 @@
-# Assisted-Interpretation-Server
+# EnCourage-Server
 
 A server for Assisted Interpretation.
 
