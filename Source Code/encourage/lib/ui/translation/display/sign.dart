@@ -32,36 +32,22 @@ class _SignDisplayState extends State<SignDisplay> {
   @override
   void initState() {
     super.initState();
-    if (mounted) listener = () => setState(() {});
-
-    if (widget.data.url != "") {
-      if (controller == null) {
-        controller = VideoPlayerController.network("${widget.data.url}.webm")
-          ..addListener(listener)
-          ..setLooping(true)
-          ..initialize()
-          ..play();
-      } else {
-        if (controller.value.isPlaying) {
-          controller.pause();
-        } else {
-          controller.initialize();
-          controller.play();
-        }
-      }
-
-      controller.play();
-    }
+    controller = VideoPlayerController.network(
+      "${widget.data.url}.webm",
+      videoPlayerOptions: VideoPlayerOptions(mixWithOthers: true),
+    )
+      ..addListener(() {
+        setState(() {});
+      })
+      ..setLooping(true)
+      ..initialize()
+      ..play();
   }
 
   @override
-  void deactivate() {
-    if (widget.data.url != "") {
-      controller.setVolume(0.0);
-      controller.removeListener(listener);
-    }
-
-    super.deactivate();
+  void dispose() {
+    if (widget.data.url != "") controller.dispose();
+    super.dispose();
   }
 
   @override
