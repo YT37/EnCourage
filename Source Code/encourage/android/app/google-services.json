@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:390604206752:android:749b7ee4cde26f31f00fc5",
+        "mobilesdk_app_id": "1:390604206752:android:21599117779b432ef00fc5",
         "android_client_info": {
-          "package_name": "com.sovrz.encourage"
+          "package_name": "com.solvrz.encourage"
         }
       },
       "oauth_client": [
