@@ -1,5 +1,5 @@
-# Assisted-Interpretation-Server
+# EnCourage-Server
 
-A server for Assisted Interpretation.
+A server for EnCourage.
 
-Link: https://dashboard.heroku.com/apps/assisted-interpretation
+Link: https://dashboard.heroku.com/apps/encourage-server
