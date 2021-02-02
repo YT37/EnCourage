@@ -1,0 +1,28 @@
+name: encourage
+description: An app for EnCourage.
+
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  responsive_framework: ^0.0.14
+  speech_recognition:
+    git:
+      url: https://github.com/webeverde/speech_recognition.git
+      ref: master
+  image_picker: ^0.6.7+22
+  video_player: ^1.0.1
+  http: ^0.12.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
