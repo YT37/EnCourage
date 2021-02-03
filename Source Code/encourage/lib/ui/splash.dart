@@ -39,7 +39,7 @@ class _SplashScreenState extends State<SplashScreen>
       setState(() {});
     });
 
-    Timer(Duration(seconds: 5), () {
+    Timer(Duration(seconds: 2), () {
       setState(() {
         _controller.forward();
       });
@@ -90,7 +90,7 @@ class _SplashScreenState extends State<SplashScreen>
             child: CustomPaint(
               painter: AnimatedCircle(
                 circleSize: holeSize.value * size.height,
-                accentColor: Theme.of(context).primaryColor,
+                accentColor: Theme.of(context).accentColor,
               ),
             ),
           ),
