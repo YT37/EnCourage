@@ -41,6 +41,7 @@ class EnCourage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       builder: (BuildContext context, Widget widget) => Theme(
         data: AppTheme.light(context),
         child: ResponsiveWrapper.builder(
