@@ -1,3 +1,2 @@
 # EnCourage
-
-An platform for Education of the Physically Challenged.
+A platform for Education for the Physically Challenged.
