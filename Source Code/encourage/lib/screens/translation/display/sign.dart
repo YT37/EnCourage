@@ -6,13 +6,9 @@ import 'package:video_player/video_player.dart';
 class SignData {
   final String url;
 
-  SignData({this.url});
+  SignData({required this.url});
 
-  static SignData fromMap(Map map) {
-    return SignData(
-      url: map["url"],
-    );
-  }
+  static SignData fromMap(Map map) => SignData(url: map["url"]);
 }
 
 // ignore: must_be_immutable
@@ -26,7 +22,7 @@ class SignDisplay extends StatefulWidget {
 }
 
 class _SignDisplayState extends State<SignDisplay> {
-  VideoPlayerController controller;
+  VideoPlayerController? controller;
   dynamic listener;
 
   @override
@@ -46,7 +42,7 @@ class _SignDisplayState extends State<SignDisplay> {
 
   @override
   void dispose() {
-    if (widget.data.url != "") controller.dispose();
+    if (widget.data.url != "") controller!.dispose();
     super.dispose();
   }
 
@@ -55,10 +51,10 @@ class _SignDisplayState extends State<SignDisplay> {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 8),
       child: controller != null
-          ? VideoPlayer(controller)
+          ? VideoPlayer(controller!)
           : Text(
               "An Error occurred. Please Try Again",
-              style: Theme.of(context).textTheme.headline3.copyWith(
+              style: Theme.of(context).textTheme.headline3!.copyWith(
                     fontWeight: FontWeight.w500,
                     fontSize: 22.getHeight(context),
                   ),

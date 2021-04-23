@@ -9,13 +9,13 @@ class TabSlider extends StatefulWidget {
   final List<Function> screens;
   final double width;
   final bool isDynamic;
-  final Function onChanged;
-  ValueNotifier<int> currentIndex;
+  final Function? onChanged;
+  ValueNotifier<int>? currentIndex;
 
   TabSlider(
-      {@required this.parent,
-      @required this.tabNames,
-      @required this.screens,
+      {required this.parent,
+      required this.tabNames,
+      required this.screens,
       this.width = 200,
       this.isDynamic = false,
       this.currentIndex,
@@ -24,7 +24,7 @@ class TabSlider extends StatefulWidget {
   final _TabSliderState state = _TabSliderState();
 
   int getCurrentIndex() {
-    return currentIndex.value;
+    return currentIndex!.value;
   }
 
   @override
@@ -41,7 +41,7 @@ class _TabSliderState extends State<TabSlider> {
       sliderWidth = widget.width;
 
     return ValueListenableBuilder<int>(
-      valueListenable: widget.currentIndex,
+      valueListenable: widget.currentIndex!,
       builder: (BuildContext context, value, child) => Container(
         margin: EdgeInsets.only(top: 12, bottom: 24),
         child: Column(
@@ -67,13 +67,13 @@ class _TabSliderState extends State<TabSlider> {
                             onTap: () {
                               if (mounted) {
                                 setState(() {
-                                  widget.currentIndex.value = index;
+                                  widget.currentIndex!.value = index;
                                   widget.onChanged == null
                                       ? widget.parent.setState(() {
                                           widget.parent.screen =
                                               widget.screens[index]();
                                         })
-                                      : widget.onChanged(index);
+                                      : widget.onChanged!(index);
                                 });
                               }
                             },
@@ -92,7 +92,7 @@ class _TabSliderState extends State<TabSlider> {
                   AnimatedPositioned(
                     duration: Duration(milliseconds: 300),
                     curve: Curves.easeInOut,
-                    left: widget.currentIndex.value *
+                    left: widget.currentIndex!.value *
                         (sliderWidth / widget.tabNames.length),
                     child: Container(
                       width: sliderWidth / widget.tabNames.length,

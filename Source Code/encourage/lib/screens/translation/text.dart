@@ -2,7 +2,7 @@ import 'package:encourage/api/braid.dart';
 import 'package:encourage/api/response.dart';
 import 'package:encourage/api/signus.dart';
 import 'package:encourage/config/extensions.dart';
-import 'package:encourage/ui/translation/display/sign.dart';
+import 'package:encourage/screens/translation/display/sign.dart';
 import 'package:flutter/material.dart';
 
 import 'display/braille.dart';
@@ -14,7 +14,7 @@ class TextTranslation extends StatefulWidget {
   final String translateFrom;
   final String translateTo;
 
-  TextTranslation({this.translateFrom, this.translateTo});
+  TextTranslation({required this.translateFrom, required this.translateTo});
 
   void onTapSelected(String mode) {}
 
@@ -27,7 +27,7 @@ class TextTranslation extends StatefulWidget {
 class _TextTranslationState extends State<TextTranslation> {
   final TextEditingController _controller = TextEditingController();
 
-  Response response;
+  Response? response;
   bool translating = false;
 
   void clear() => setState(() {
@@ -73,7 +73,7 @@ class _TextTranslationState extends State<TextTranslation> {
           controller: _controller,
           style: Theme.of(context)
               .textTheme
-              .headline2
+              .headline2!
               .copyWith(fontWeight: FontWeight.w500),
           cursorColor: Colors.grey[400],
           cursorHeight: 30.getHeight(context),
@@ -81,7 +81,7 @@ class _TextTranslationState extends State<TextTranslation> {
           keyboardType: TextInputType.text,
           decoration: InputDecoration(
             hintText: "Type the text to translate",
-            hintStyle: Theme.of(context).textTheme.headline3.copyWith(
+            hintStyle: Theme.of(context).textTheme.headline3!.copyWith(
                   fontWeight: FontWeight.w500,
                   fontSize: 22.getHeight(context),
                 ),
@@ -118,31 +118,23 @@ class _TextTranslationState extends State<TextTranslation> {
           height: 18.getHeight(context),
           thickness: 0.6,
         ),
-        SizedBox(
-          height: 15.getHeight(context),
-        ),
+        SizedBox(height: 15.getHeight(context)),
         Text(
           widget.translateTo,
           style: TextStyle(color: Colors.grey[400]),
         ),
-        SizedBox(
-          height: 12.getHeight(context),
-        ),
+        SizedBox(height: 12.getHeight(context)),
         Container(
           height: 270.getHeight(context),
           child: response != null
               ? widget.translateTo == "Braille"
-                  ? BrailleDisplay(
-                      BrailleData.fromMap(response.response),
-                    )
-                  : SignDisplay(
-                      SignData.fromMap(response.response),
-                    )
+                  ? BrailleDisplay(BrailleData.fromMap(response!.response!))
+                  : SignDisplay(SignData.fromMap(response!.response!))
               : Text(
                   translating
                       ? "Translating..."
                       : "Converted Text will appear here",
-                  style: Theme.of(context).textTheme.headline3.copyWith(
+                  style: Theme.of(context).textTheme.headline3!.copyWith(
                         fontWeight: FontWeight.w500,
                         fontSize: 22.getHeight(context),
                       ),

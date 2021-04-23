@@ -6,9 +6,9 @@ class AppTheme {
     Color primaryColor = Color(0xff315cf5);
     Color accentColor = Color(0xffFBFBFB);
     Color highlightColor = accentColor.withOpacity(0.3);
-    Color disabledColor = Colors.grey[300];
+    Color? disabledColor = Colors.grey[300];
     Color lightText = Color(0xffF5F9F9);
-    Color darkText = Colors.grey[900];
+    Color? darkText = Colors.grey[900];
 
     return ThemeData.light().copyWith(
       accentColor: accentColor,

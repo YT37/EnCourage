@@ -5,14 +5,12 @@ class BrailleData {
   final List cells;
   final List repr;
 
-  BrailleData({this.cells, this.repr = const []});
+  BrailleData({required this.cells, this.repr = const []});
 
-  static BrailleData fromMap(Map map) {
-    return BrailleData(
-      cells: map["cells"],
-      repr: map["repr"] != null ? map["repr"] : [],
-    );
-  }
+  static BrailleData fromMap(Map map) => BrailleData(
+        cells: map["cells"],
+        repr: map["repr"] != null ? map["repr"] : [],
+      );
 }
 
 class BrailleDisplay extends StatelessWidget {
@@ -20,7 +18,8 @@ class BrailleDisplay extends StatelessWidget {
 
   BrailleDisplay(this.data);
 
-  Widget drawCell({BuildContext context, List cell, String repr = ""}) {
+  Widget drawCell(
+      {required BuildContext context, List? cell, String repr = ""}) {
     return Column(
       children: [
         ...List.generate(
@@ -34,7 +33,7 @@ class BrailleDisplay extends StatelessWidget {
                 height: 14.getHeight(context),
                 width: 14.getHeight(context),
                 decoration: BoxDecoration(
-                  color: cell[2 * x + y] == 1 ? Colors.black : Colors.white,
+                  color: cell![2 * x + y] == 1 ? Colors.black : Colors.white,
                   border: Border.all(color: Colors.black),
                   shape: BoxShape.circle,
                 ),

@@ -9,7 +9,7 @@ class RoundedAlertDialog extends StatelessWidget {
   final bool centerTitle;
 
   RoundedAlertDialog({
-    @required this.title,
+    required this.title,
     this.description = "",
     this.buttonsList = const [],
     this.otherWidgets = const [],

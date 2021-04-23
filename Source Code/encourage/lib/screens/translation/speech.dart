@@ -2,9 +2,11 @@ import 'package:encourage/api/braid.dart';
 import 'package:encourage/api/response.dart';
 import 'package:encourage/api/signus.dart';
 import 'package:encourage/config/extensions.dart';
-import 'package:encourage/ui/translation/display/sign.dart';
+import 'package:encourage/screens/translation/display/sign.dart';
 import 'package:flutter/material.dart';
-import 'package:speech_recognition/speech_recognition.dart';
+import 'package:speech_to_text/speech_recognition_error.dart';
+import 'package:speech_to_text/speech_recognition_result.dart';
+import 'package:speech_to_text/speech_to_text.dart';
 
 import 'display/braille.dart';
 
@@ -13,8 +15,8 @@ bool doListen = false;
 
 // ignore: must_be_immutable
 class SpeechTranslation extends StatefulWidget {
-  final String translateFrom;
-  final String translateTo;
+  final String? translateFrom;
+  final String? translateTo;
 
   SpeechTranslation({this.translateFrom, this.translateTo});
 
@@ -27,47 +29,42 @@ class SpeechTranslation extends StatefulWidget {
 }
 
 class _SpeechTranslationState extends State<SpeechTranslation> {
-  Response response;
+  Response? response;
   bool translating = false;
 
-  SpeechRecognition speech;
+  SpeechToText speech = SpeechToText();
 
   bool available = false;
   bool listening = false;
   String recognized = "";
 
-  void clear() {
-    setState(() {
-      recognized = "";
-      response = null;
-    });
-  }
+  void clear() => setState(() {
+        recognized = "";
+        response = null;
+      });
 
-  void listen() {
+  void listen() async {
     clear();
-    speech.listen(locale: "en_US");
-  }
 
-  @override
-  void initState() {
-    super.initState();
-
-    speech = SpeechRecognition();
-
-    speech.setAvailabilityHandler(
-      (bool result) => setState(() => available = result),
+    available = await speech.initialize(
+      onStatus: (_) {},
+      onError: (SpeechRecognitionError e) =>
+          ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(e.errorMsg, textAlign: TextAlign.center),
+        ),
+      ),
     );
-    speech.setRecognitionStartedHandler(
-      () => setState(() => listening = true),
-    );
-    speech.setRecognitionResultHandler(
-      (String text) => setState(() {
+
+    if (available)
+      speech.listen(onResult: (SpeechRecognitionResult result) {
+        String text = result.recognizedWords;
+
         if (text != "") {
           response = null;
           translating = true;
 
           recognized = text;
-
           widget.translateTo == "Braille"
               ? BrAidApi.getCellsWithRepr(recognized)
                   .then(
@@ -84,15 +81,16 @@ class _SpeechTranslationState extends State<SpeechTranslation> {
                     () => setState(() => translating = false),
                   );
         }
-      }),
-    );
-    speech.setRecognitionCompleteHandler(
-      (_) => setState(() => listening = false),
-    );
+      });
+    else
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Please allow microphone access from settings",
+              textAlign: TextAlign.center),
+        ),
+      );
 
-    speech.activate().then(
-          (res) => setState(() => available = res),
-        );
+    speech.stop();
   }
 
   @override
@@ -114,7 +112,7 @@ class _SpeechTranslationState extends State<SpeechTranslation> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              widget.translateFrom,
+              widget.translateFrom!,
               style: TextStyle(color: Colors.grey[400]),
             ),
             if (recognized != "")
@@ -137,37 +135,33 @@ class _SpeechTranslationState extends State<SpeechTranslation> {
             recognized != ""
                 ? recognized
                 : "Click the Mic Icon below to start listening",
-            style: Theme.of(context).textTheme.headline3.copyWith(
+            style: Theme.of(context).textTheme.headline3!.copyWith(
                   fontWeight: FontWeight.w500,
                   fontSize: 22.getHeight(context),
                 ),
           ),
         ),
-        Divider(
-          height: 48.getHeight(context),
-        ),
+        Divider(height: 48.getHeight(context)),
         Text(
-          widget.translateTo,
+          widget.translateTo!,
           style: TextStyle(color: Colors.grey[400]),
         ),
-        SizedBox(
-          height: 12.getHeight(context),
-        ),
+        SizedBox(height: 12.getHeight(context)),
         Container(
           height: MediaQuery.of(context).size.height / 3.5,
           child: response != null
               ? widget.translateTo == "Braille"
                   ? BrailleDisplay(
-                      BrailleData.fromMap(response.response),
+                      BrailleData.fromMap(response!.response!),
                     )
                   : SignDisplay(
-                      SignData.fromMap(response.response),
+                      SignData.fromMap(response!.response!),
                     )
               : Text(
                   translating
                       ? "Translating..."
                       : "Converted Text will appear here",
-                  style: Theme.of(context).textTheme.headline3.copyWith(
+                  style: Theme.of(context).textTheme.headline3!.copyWith(
                         fontWeight: FontWeight.w500,
                         fontSize: 22.getHeight(context),
                       ),

@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 
-import 'package:encourage/ui/home.dart';
+import 'package:encourage/screens/home.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -12,15 +12,12 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen>
     with SingleTickerProviderStateMixin {
   Size size = Size.zero;
-  AnimationController _controller;
-  Animation<double> holeSize;
+  late AnimationController _controller;
+  late Animation<double> holeSize;
 
   void didChangeDependencies() {
     super.didChangeDependencies();
-
-    setState(() {
-      size = MediaQuery.of(context).size;
-    });
+    setState(() => size = MediaQuery.of(context).size);
   }
 
   @override
@@ -30,20 +27,13 @@ class _SplashScreenState extends State<SplashScreen>
     _controller = AnimationController(
       duration: Duration(seconds: 3),
       vsync: this,
-    );
+    )..addListener(() => setState(() {}));
 
     holeSize = Tween<double>(begin: 0, end: 2).animate(
       CurvedAnimation(parent: _controller, curve: Curves.easeInOutCubic),
     );
-    _controller.addListener(() {
-      setState(() {});
-    });
 
-    Timer(Duration(seconds: 2), () {
-      setState(() {
-        _controller.forward();
-      });
-    });
+    Timer(Duration(seconds: 2), () => setState(() => _controller.forward()));
   }
 
   @override
@@ -80,7 +70,7 @@ class _SplashScreenState extends State<SplashScreen>
             ),
           ),
         Opacity(
-          opacity: pow(holeSize.value / 2, 2),
+          opacity: pow(holeSize.value / 2, 2) as double,
           child: HomeScreen(),
         ),
         if (holeSize.value < 1.5)
@@ -101,8 +91,8 @@ class _SplashScreenState extends State<SplashScreen>
 
 class AnimatedCircle extends CustomPainter {
   AnimatedCircle({
-    @required this.circleSize,
-    @required this.accentColor,
+    required this.circleSize,
+    required this.accentColor,
   });
 
   double circleSize;

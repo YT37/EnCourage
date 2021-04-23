@@ -4,7 +4,7 @@ import 'package:encourage/api/braid.dart';
 import 'package:encourage/api/response.dart';
 import 'package:encourage/api/signus.dart';
 import 'package:encourage/config/extensions.dart';
-import 'package:encourage/ui/translation/display/sign.dart';
+import 'package:encourage/screens/translation/display/sign.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -18,7 +18,7 @@ class ImageTranslation extends StatefulWidget {
   final String translateFrom;
   final String translateTo;
 
-  ImageTranslation({this.translateFrom, this.translateTo});
+  ImageTranslation({required this.translateFrom, required this.translateTo});
 
   @override
   _ImageTranslationState createState() => _ImageTranslationState();
@@ -29,7 +29,7 @@ class ImageTranslation extends StatefulWidget {
 }
 
 class _ImageTranslationState extends State<ImageTranslation> {
-  Response response;
+  Response? response;
   bool translating = false;
 
   String recognized = "";
@@ -47,7 +47,7 @@ class _ImageTranslationState extends State<ImageTranslation> {
     final ImagePicker picker = ImagePicker();
 
     picker.getImage(source: ImageSource.camera).then((value) {
-      PickedFile image = value;
+      PickedFile? image = value;
 
       if (image != null) {
         setState(() => translating = true);
@@ -125,7 +125,7 @@ class _ImageTranslationState extends State<ImageTranslation> {
                 : translating
                     ? "Recognizing Text..."
                     : "Click the Camera Icon below to take a picture",
-            style: Theme.of(context).textTheme.headline3.copyWith(
+            style: Theme.of(context).textTheme.headline3!.copyWith(
                   fontWeight: FontWeight.w500,
                   fontSize: 22.getHeight(context),
                 ),
@@ -146,16 +146,16 @@ class _ImageTranslationState extends State<ImageTranslation> {
           child: response != null
               ? widget.translateTo == "Braille"
                   ? BrailleDisplay(
-                      BrailleData.fromMap(response.response),
+                      BrailleData.fromMap(response!.response!),
                     )
                   : SignDisplay(
-                      SignData.fromMap(response.response),
+                      SignData.fromMap(response!.response!),
                     )
               : Text(
                   translating
                       ? "Translating..."
                       : "Converted Text will appear here",
-                  style: Theme.of(context).textTheme.headline3.copyWith(
+                  style: Theme.of(context).textTheme.headline3!.copyWith(
                         fontWeight: FontWeight.w500,
                         fontSize: 22.getHeight(context),
                       ),

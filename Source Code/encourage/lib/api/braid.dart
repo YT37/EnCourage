@@ -12,12 +12,10 @@ class BrAidApi {
 
     try {
       http.Response token = await http.post(
-        "https://encourage-server.herokuapp.com/braid/cells",
-        headers: <String, String>{
-          "Content-Type": "application/json; charset=UTF-8",
-        },
-        body: jsonEncode(
-          <String, dynamic>{"sentence": sentence.trim()},
+        Uri.https(
+          "encourage-server.herokuapp.com/braid",
+          "/cells",
+          {"sentence": sentence.trim()},
         ),
       );
 
@@ -44,12 +42,10 @@ class BrAidApi {
 
     try {
       http.Response token = await http.post(
-        "https://encourage-server.herokuapp.com/braid/cells-repr",
-        headers: <String, String>{
-          "Content-Type": "application/json; charset=UTF-8",
-        },
-        body: jsonEncode(
-          <String, dynamic>{"sentence": sentence.trim()},
+        Uri.https(
+          "encourage-server.herokuapp.com/braid",
+          "/cells-repr",
+          {"sentence": sentence.trim()},
         ),
       );
 

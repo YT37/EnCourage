@@ -6,8 +6,8 @@ class AlertButton extends StatelessWidget {
   final Function onPressed;
 
   AlertButton({
-    @required this.title,
-    @required this.onPressed,
+    required this.title,
+    required this.onPressed,
   });
 
   @override
@@ -26,7 +26,7 @@ class AlertButton extends StatelessWidget {
           fontWeight: FontWeight.bold,
         ),
       ),
-      onPressed: onPressed,
+      onPressed: onPressed as void Function()?,
     );
   }
 }

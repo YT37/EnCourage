@@ -1,8 +1,8 @@
 import 'package:encourage/config/extensions.dart';
-import 'package:encourage/ui/mode_selection.dart';
-import 'package:encourage/ui/translation/image.dart';
-import 'package:encourage/ui/translation/speech.dart';
-import 'package:encourage/ui/translation/text.dart';
+import 'package:encourage/screens/mode_selection.dart';
+import 'package:encourage/screens/translation/image.dart';
+import 'package:encourage/screens/translation/speech.dart';
+import 'package:encourage/screens/translation/text.dart';
 import 'package:encourage/widgets/alert_button.dart';
 import 'package:encourage/widgets/rounded_alert_dialog.dart';
 import 'package:flutter/material.dart';
@@ -44,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return WillPopScope(
       onWillPop: () async {
-        return showDialog(
+        showDialog(
           context: context,
           builder: (_) => RoundedAlertDialog(
             title: "Do you want to quit the app?",
@@ -60,6 +60,8 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
         );
+
+        return false;
       },
       child: SafeArea(
         child: Scaffold(
@@ -85,7 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               translateFrom,
                               style: Theme.of(context)
                                   .textTheme
-                                  .bodyText1
+                                  .bodyText1!
                                   .copyWith(
                                     fontSize: 18.getHeight(context),
                                   ),
@@ -128,12 +130,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                   color: Colors.grey[800],
                                 ),
                               ),
-                              onChanged: (String option) {
+                              onChanged: (String? option) {
                                 if (translateTo != option) {
                                   translationScreen.clearResponse();
-                                  setState(() {
-                                    translateTo = option;
-                                  });
+                                  setState(() => translateTo = option!);
                                 }
                               },
                               items: translateToOptions
@@ -143,7 +143,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           option,
                                           style: Theme.of(context)
                                               .textTheme
-                                              .bodyText1
+                                              .bodyText1!
                                               .copyWith(
                                                 fontSize: 18.getHeight(context),
                                               ),
