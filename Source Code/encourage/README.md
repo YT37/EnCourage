@@ -1,3 +1,2 @@
-# EnCourage
-
-An app for EnCourage.
+# EnCourage-App
+- App for EnCourage.
