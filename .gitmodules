@@ -1,3 +1,6 @@
 [submodule "Source Code/encourage_website"]
 	path = Source Code/encourage_website
 	url = git@github.com:Solvrz/EnCourage-Website.git
+[submodule "Source Code/server"]
+	path = Source Code/server
+	url = git@github.com:Solvrz/EnCourage-Server.git
