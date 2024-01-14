@@ -1,32 +1,32 @@
 import base64
 
 alphabets = {
-    "a": "../assets/signs/alphabets/A.png",
-    "b": "../assets/signs/alphabets/B.png",
-    "c": "../assets/signs/alphabets/C.png",
-    "d": "../assets/signs/alphabets/D.png",
-    "e": "../assets/signs/alphabets/E.png",
-    "f": "../assets/signs/alphabets/F.png",
-    "g": "../assets/signs/alphabets/G.png",
-    "h": "../assets/signs/alphabets/H.png",
-    "i": "../assets/signs/alphabets/I.png",
-    "j": "../assets/signs/alphabets/J.png",
-    "k": "../assets/signs/alphabets/K.png",
-    "l": "../assets/signs/alphabets/L.png",
-    "m": "../assets/signs/alphabets/M.png",
-    "n": "../assets/signs/alphabets/N.png",
-    "o": "../assets/signs/alphabets/O.png",
-    "p": "../assets/signs/alphabets/P.png",
-    "q": "../assets/signs/alphabets/Q.png",
-    "r": "../assets/signs/alphabets/R.png",
-    "s": "../assets/signs/alphabets/S.png",
-    "t": "../assets/signs/alphabets/T.png",
-    "u": "../assets/signs/alphabets/U.png",
-    "v": "../assets/signs/alphabets/V.png",
-    "w": "../assets/signs/alphabets/W.png",
-    "x": "../assets/signs/alphabets/X.png",
-    "y": "../assets/signs/alphabets/Y.png",
-    "z": "../assets/signs/alphabets/Z.png",
+    "a": "assets/signs/alphabets/A.png",
+    "b": "assets/signs/alphabets/B.png",
+    "c": "assets/signs/alphabets/C.png",
+    "d": "assets/signs/alphabets/D.png",
+    "e": "assets/signs/alphabets/E.png",
+    "f": "assets/signs/alphabets/F.png",
+    "g": "assets/signs/alphabets/G.png",
+    "h": "assets/signs/alphabets/H.png",
+    "i": "assets/signs/alphabets/I.png",
+    "j": "assets/signs/alphabets/J.png",
+    "k": "assets/signs/alphabets/K.png",
+    "l": "assets/signs/alphabets/L.png",
+    "m": "assets/signs/alphabets/M.png",
+    "n": "assets/signs/alphabets/N.png",
+    "o": "assets/signs/alphabets/O.png",
+    "p": "assets/signs/alphabets/P.png",
+    "q": "assets/signs/alphabets/Q.png",
+    "r": "assets/signs/alphabets/R.png",
+    "s": "assets/signs/alphabets/S.png",
+    "t": "assets/signs/alphabets/T.png",
+    "u": "assets/signs/alphabets/U.png",
+    "v": "assets/signs/alphabets/V.png",
+    "w": "assets/signs/alphabets/W.png",
+    "x": "assets/signs/alphabets/X.png",
+    "y": "assets/signs/alphabets/Y.png",
+    "z": "assets/signs/alphabets/Z.png",
 }
 
 # TODO: Numbers
@@ -47,9 +47,7 @@ alphabets = {
 class Character:
     def __init__(self, character, sign):
         self.character = character
-
-        with open(sign, "rb") as f:
-            self.sign = base64.b64encode(f.read()).decode("ascii")
+        self.sign = sign
 
     def __str__(self):
         return self.character
