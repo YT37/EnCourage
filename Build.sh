@@ -1,1 +1,1 @@
-cd Source\ Code/encourage/ && flutter build apk && mv build/app/outputs/flutter-apk/app-release.apk ../.. && cd ../.. && mv app-release.apk "EnCourage.apk"
+cd Source\ Code/app/ && flutter build apk && mv build/app/outputs/flutter-apk/app-release.apk ../.. && cd ../.. && mv app-release.apk "EnCourage.apk"
