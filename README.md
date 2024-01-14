@@ -1,2 +1,1 @@
-# EnCourage-Server
-- Server for EnCourage.
+# Server
