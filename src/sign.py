@@ -29,19 +29,18 @@ alphabets = {
     "z": "assets/signs/alphabets/Z.png",
 }
 
-# TODO: Numbers
-# nums = {
-#     "1": alpha["a"],
-#     "2": alpha["b"],
-#     "3": alpha["c"],
-#     "4": alpha["d"],
-#     "5": alpha["e"],
-#     "6": alpha["f"],
-#     "7": alpha["g"],
-#     "8": alpha["h"],
-#     "9": alpha["i"],
-#     "0": alpha["j"],
-# }
+numbers = {
+    "0": "assets/signs/numbers/0.png",
+    "1": "assets/signs/numbers/1.png",
+    "2": "assets/signs/numbers/2.png",
+    "3": "assets/signs/numbers/3.png",
+    "4": "assets/signs/numbers/4.png",
+    "5": "assets/signs/numbers/5.png",
+    "6": "assets/signs/numbers/6.png",
+    "7": "assets/signs/numbers/7.png",
+    "8": "assets/signs/numbers/8.png",
+    "9": "assets/signs/numbers/9.png",
+}
 
 
 class Character:
@@ -64,15 +63,15 @@ class Word:
         characters = list(self.word)
 
         for i in range(len(characters)):
-            character = characters[i]
+            character = characters[i].lower()
 
             if character in list(alphabets):
                 self.characters.append(
-                    Character(character.lower(), alphabets[character.lower()])
+                    Character(character, alphabets[character.lower()])
                 )
 
-            # elif character in list(numbers):
-            #     self.characters.append(Sign(character, numbers[character]))
+            elif character in list(numbers):
+                self.characters.append(Character(character, numbers[character]))
 
             else:
                 print(f"{self.word} doesn't have any match!")
