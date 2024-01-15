@@ -24,8 +24,6 @@ class SignDisplay extends StatelessWidget {
               final String sign = signs[index];
               final String caption = captions[index];
 
-              print(sign);
-
               return Column(
                 children: [
                   Container(
