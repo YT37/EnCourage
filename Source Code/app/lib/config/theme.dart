@@ -1,7 +1,8 @@
+// ignore_for_file: avoid_classes_with_only_static_members
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-// ignore: avoid_classes_with_only_static_members
 class EnCouargeTheme {
   static ThemeData of(BuildContext context) {
     final TextTheme _font = GoogleFonts.poppinsTextTheme();
