@@ -5,7 +5,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 import '/config/constants.dart';
-import "/models/response.dart";
+import '/models/response.dart';
 
 class API {
   static Future<Response> translate(String text) async {
