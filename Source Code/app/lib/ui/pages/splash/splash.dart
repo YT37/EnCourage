@@ -74,7 +74,7 @@ class _SplashScreenState extends State<SplashScreen>
                 type: MaterialType.transparency,
                 child: Center(
                   child: Image.asset(
-                    "assets/images/logo.png",
+                    "assets/images/Logo.png",
                     height: 300,
                     width: 300,
                   ),
